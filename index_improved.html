@@ -1736,30 +1736,270 @@
                 </div>
             </div>
 
+            <!-- Regulatory Compliance Tracker -->
             <div class="bg-white p-6 rounded-lg shadow-md mb-8">
-                <h2 class="text-xl font-semibold mb-4 text-gray-800">Regulatory Pillars at a Glance</h2>
-                <div class="chart-container">
-                    <canvas id="complianceChart"></canvas>
+                <h2 class="text-xl font-semibold mb-4 text-gray-800">Regulatory Compliance Tracker</h2>
+                <p class="text-sm text-gray-600 mb-4">Track your compliance status across all regulatory requirements. Click any area to view details and action items.</p>
+                
+                <!-- Compliance Progress Overview -->
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-6">
+                    <div class="text-center cursor-pointer hover:transform hover:scale-105 transition-transform" onclick="showComplianceDetails('hipaa')">
+                        <div class="relative inline-block">
+                            <svg class="w-16 h-16 transform -rotate-90">
+                                <circle cx="32" cy="32" r="28" stroke="#e5e7eb" stroke-width="8" fill="none"/>
+                                <circle cx="32" cy="32" r="28" stroke="#3b82f6" stroke-width="8" fill="none"
+                                        stroke-dasharray="176" stroke-dashoffset="44" stroke-linecap="round"/>
+                            </svg>
+                            <span class="absolute inset-0 flex items-center justify-center text-sm font-bold">75%</span>
+                        </div>
+                        <p class="text-xs mt-1 font-medium">HIPAA</p>
+                    </div>
+                    <div class="text-center cursor-pointer hover:transform hover:scale-105 transition-transform" onclick="showComplianceDetails('osha')">
+                        <div class="relative inline-block">
+                            <svg class="w-16 h-16 transform -rotate-90">
+                                <circle cx="32" cy="32" r="28" stroke="#e5e7eb" stroke-width="8" fill="none"/>
+                                <circle cx="32" cy="32" r="28" stroke="#f97316" stroke-width="8" fill="none"
+                                        stroke-dasharray="176" stroke-dashoffset="35" stroke-linecap="round"/>
+                            </svg>
+                            <span class="absolute inset-0 flex items-center justify-center text-sm font-bold">80%</span>
+                        </div>
+                        <p class="text-xs mt-1 font-medium">OSHA</p>
+                    </div>
+                    <div class="text-center cursor-pointer hover:transform hover:scale-105 transition-transform" onclick="showComplianceDetails('clia')">
+                        <div class="relative inline-block">
+                            <svg class="w-16 h-16 transform -rotate-90">
+                                <circle cx="32" cy="32" r="28" stroke="#e5e7eb" stroke-width="8" fill="none"/>
+                                <circle cx="32" cy="32" r="28" stroke="#a855f7" stroke-width="8" fill="none"
+                                        stroke-dasharray="176" stroke-dashoffset="18" stroke-linecap="round"/>
+                            </svg>
+                            <span class="absolute inset-0 flex items-center justify-center text-sm font-bold">90%</span>
+                        </div>
+                        <p class="text-xs mt-1 font-medium">CLIA</p>
+                    </div>
+                    <div class="text-center cursor-pointer hover:transform hover:scale-105 transition-transform" onclick="showComplianceDetails('wi-meb')">
+                        <div class="relative inline-block">
+                            <svg class="w-16 h-16 transform -rotate-90">
+                                <circle cx="32" cy="32" r="28" stroke="#e5e7eb" stroke-width="8" fill="none"/>
+                                <circle cx="32" cy="32" r="28" stroke="#22c55e" stroke-width="8" fill="none"
+                                        stroke-dasharray="176" stroke-dashoffset="0" stroke-linecap="round"/>
+                            </svg>
+                            <span class="absolute inset-0 flex items-center justify-center text-sm font-bold">100%</span>
+                        </div>
+                        <p class="text-xs mt-1 font-medium">WI MEB</p>
+                    </div>
+                    <div class="text-center cursor-pointer hover:transform hover:scale-105 transition-transform" onclick="showComplianceDetails('wi-dpc')">
+                        <div class="relative inline-block">
+                            <svg class="w-16 h-16 transform -rotate-90">
+                                <circle cx="32" cy="32" r="28" stroke="#e5e7eb" stroke-width="8" fill="none"/>
+                                <circle cx="32" cy="32" r="28" stroke="#14b8a6" stroke-width="8" fill="none"
+                                        stroke-dasharray="176" stroke-dashoffset="26" stroke-linecap="round"/>
+                            </svg>
+                            <span class="absolute inset-0 flex items-center justify-center text-sm font-bold">85%</span>
+                        </div>
+                        <p class="text-xs mt-1 font-medium">WI DPC</p>
+                    </div>
+                    <div class="text-center cursor-pointer hover:transform hover:scale-105 transition-transform" onclick="showComplianceDetails('wi-dnr')">
+                        <div class="relative inline-block">
+                            <svg class="w-16 h-16 transform -rotate-90">
+                                <circle cx="32" cy="32" r="28" stroke="#e5e7eb" stroke-width="8" fill="none"/>
+                                <circle cx="32" cy="32" r="28" stroke="#6b7280" stroke-width="8" fill="none"
+                                        stroke-dasharray="176" stroke-dashoffset="9" stroke-linecap="round"/>
+                            </svg>
+                            <span class="absolute inset-0 flex items-center justify-center text-sm font-bold">95%</span>
+                        </div>
+                        <p class="text-xs mt-1 font-medium">WI DNR</p>
+                    </div>
                 </div>
-                <p class="text-center text-sm text-gray-500 mt-2">Click a bar on the chart to jump to the corresponding summary below.</p>
+
+                <!-- Compliance Details Modal -->
+                <div id="compliance-details-modal" class="hidden">
+                    <div class="bg-gray-50 border rounded-lg p-4">
+                        <div class="flex justify-between items-center mb-3">
+                            <h3 id="modal-title" class="text-lg font-semibold">Compliance Details</h3>
+                            <button onclick="closeComplianceDetails()" class="text-gray-500 hover:text-gray-700">
+                                <i class="fa-solid fa-times"></i>
+                            </button>
+                        </div>
+                        <div id="modal-content">
+                            <!-- Dynamic content will be inserted here -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Upcoming Compliance Tasks -->
+                <div class="mt-6 border-t pt-4">
+                    <h3 class="text-lg font-semibold mb-3">Upcoming Compliance Tasks</h3>
+                    <div class="space-y-2" id="compliance-tasks">
+                        <div class="flex items-center justify-between p-3 bg-yellow-50 rounded-lg cursor-pointer hover:bg-yellow-100" onclick="showComplianceTask('osha-training')">
+                            <div class="flex items-center">
+                                <i class="fa-solid fa-clock text-yellow-600 mr-3"></i>
+                                <div>
+                                    <p class="font-medium text-sm">Annual OSHA Training Due</p>
+                                    <p class="text-xs text-gray-600">Due in 15 days</p>
+                                </div>
+                            </div>
+                            <button onclick="event.stopPropagation(); scheduleComplianceTask('osha-training')" class="text-sm bg-yellow-600 text-white px-3 py-1 rounded hover:bg-yellow-700">
+                                Schedule
+                            </button>
+                        </div>
+                        <div class="flex items-center justify-between p-3 bg-blue-50 rounded-lg cursor-pointer hover:bg-blue-100" onclick="showComplianceTask('hipaa-assessment')">
+                            <div class="flex items-center">
+                                <i class="fa-solid fa-file-alt text-blue-600 mr-3"></i>
+                                <div>
+                                    <p class="font-medium text-sm">HIPAA Risk Assessment</p>
+                                    <p class="text-xs text-gray-600">Due in 30 days</p>
+                                </div>
+                            </div>
+                            <button onclick="event.stopPropagation(); startComplianceTask('hipaa-assessment')" class="text-sm bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700">
+                                Start
+                            </button>
+                        </div>
+                        <div class="flex items-center justify-between p-3 bg-green-50 rounded-lg">
+                            <div class="flex items-center">
+                                <i class="fa-solid fa-check-circle text-green-600 mr-3"></i>
+                                <div>
+                                    <p class="font-medium text-sm">CLIA Proficiency Testing</p>
+                                    <p class="text-xs text-gray-600">Completed 5 days ago</p>
+                                </div>
+                            </div>
+                            <span class="text-sm text-green-600 font-medium">✓ Done</span>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div id="compliance-hipaa" class="bg-white p-6 rounded-lg shadow-sm border-l-4 border-blue-500">
-                    <h3 class="text-lg font-semibold text-blue-800">HIPAA: Patient Privacy & Security</h3>
-                    <p class="mt-2 text-sm text-gray-600">Protects all Protected Health Information (PHI). Key requirements include the Privacy Rule, Security Rule, and Breach Notification Rule. We must enforce the "Minimum Necessary" standard, secure patient authorizations, and have robust Business Associate Agreements (BAAs) with all vendors handling PHI.</p>
+                    <div class="flex justify-between items-start mb-3">
+                        <h3 class="text-lg font-semibold text-blue-800">HIPAA: Patient Privacy & Security</h3>
+                        <span class="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded">75% Complete</span>
+                    </div>
+                    <p class="mt-2 text-sm text-gray-600 mb-4">Protects all Protected Health Information (PHI). Key requirements include the Privacy Rule, Security Rule, and Breach Notification Rule.</p>
+                    
+                    <details class="mt-3">
+                        <summary class="cursor-pointer text-sm font-medium text-blue-700 hover:text-blue-900">View Compliance Checklist</summary>
+                        <div class="mt-3 space-y-2 text-sm">
+                            <label class="flex items-center space-x-2">
+                                <input type="checkbox" class="rounded text-blue-600" checked>
+                                <span>Privacy Notice posted and provided to patients</span>
+                            </label>
+                            <label class="flex items-center space-x-2">
+                                <input type="checkbox" class="rounded text-blue-600" checked>
+                                <span>Business Associate Agreements (BAAs) with all vendors</span>
+                            </label>
+                            <label class="flex items-center space-x-2">
+                                <input type="checkbox" class="rounded text-blue-600" checked>
+                                <span>Annual Security Risk Assessment completed</span>
+                            </label>
+                            <label class="flex items-center space-x-2">
+                                <input type="checkbox" class="rounded text-blue-600">
+                                <span class="text-red-600">Breach notification procedures documented</span>
+                            </label>
+                            <label class="flex items-center space-x-2">
+                                <input type="checkbox" class="rounded text-blue-600">
+                                <span class="text-red-600">Staff HIPAA training current (annual)</span>
+                            </label>
+                        </div>
+                    </details>
                 </div>
                 <div id="compliance-osha" class="bg-white p-6 rounded-lg shadow-sm border-l-4 border-orange-500">
-                    <h3 class="text-lg font-semibold text-orange-800">OSHA: Workplace Safety</h3>
-                    <p class="mt-2 text-sm text-gray-600">Ensures a safe environment for all staff. Requires a written Bloodborne Pathogen Exposure Control Plan (updated annually), a Hazard Communication program (with accessible SDSs), provision of Personal Protective Equipment (PPE), and mandatory safety training.</p>
+                    <div class="flex justify-between items-start mb-3">
+                        <h3 class="text-lg font-semibold text-orange-800">OSHA: Workplace Safety</h3>
+                        <span class="text-xs bg-orange-100 text-orange-800 px-2 py-1 rounded">80% Complete</span>
+                    </div>
+                    <p class="mt-2 text-sm text-gray-600 mb-4">Ensures a safe environment for all staff through workplace safety standards and training.</p>
+                    
+                    <details class="mt-3">
+                        <summary class="cursor-pointer text-sm font-medium text-orange-700 hover:text-orange-900">View Compliance Checklist</summary>
+                        <div class="mt-3 space-y-2 text-sm">
+                            <label class="flex items-center space-x-2">
+                                <input type="checkbox" class="rounded text-orange-600" checked>
+                                <span>Bloodborne Pathogen Exposure Control Plan current</span>
+                            </label>
+                            <label class="flex items-center space-x-2">
+                                <input type="checkbox" class="rounded text-orange-600" checked>
+                                <span>Safety Data Sheets (SDS) accessible</span>
+                            </label>
+                            <label class="flex items-center space-x-2">
+                                <input type="checkbox" class="rounded text-orange-600" checked>
+                                <span>Personal Protective Equipment (PPE) available</span>
+                            </label>
+                            <label class="flex items-center space-x-2">
+                                <input type="checkbox" class="rounded text-orange-600" checked>
+                                <span>Sharps containers properly placed</span>
+                            </label>
+                            <label class="flex items-center space-x-2">
+                                <input type="checkbox" class="rounded text-orange-600">
+                                <span class="text-red-600">Annual OSHA training completed</span>
+                            </label>
+                        </div>
+                    </details>
                 </div>
                  <div id="compliance-clia" class="bg-white p-6 rounded-lg shadow-sm border-l-4 border-purple-500">
-                    <h3 class="text-lg font-semibold text-purple-800">CLIA: Laboratory Standards</h3>
-                    <p class="mt-2 text-sm text-gray-600">Governs all on-site lab testing. For waived tests, we must maintain a Certificate of Waiver, follow all manufacturer instructions precisely, perform and document quality controls, and ensure all testing personnel are trained and competent.</p>
+                    <div class="flex justify-between items-start mb-3">
+                        <h3 class="text-lg font-semibold text-purple-800">CLIA: Laboratory Standards</h3>
+                        <span class="text-xs bg-purple-100 text-purple-800 px-2 py-1 rounded">90% Complete</span>
+                    </div>
+                    <p class="mt-2 text-sm text-gray-600 mb-4">Governs all on-site lab testing including waived tests.</p>
+                    
+                    <details class="mt-3">
+                        <summary class="cursor-pointer text-sm font-medium text-purple-700 hover:text-purple-900">View Compliance Checklist</summary>
+                        <div class="mt-3 space-y-2 text-sm">
+                            <label class="flex items-center space-x-2">
+                                <input type="checkbox" class="rounded text-purple-600" checked>
+                                <span>CLIA Certificate of Waiver current</span>
+                            </label>
+                            <label class="flex items-center space-x-2">
+                                <input type="checkbox" class="rounded text-purple-600" checked>
+                                <span>Test procedures following manufacturer instructions</span>
+                            </label>
+                            <label class="flex items-center space-x-2">
+                                <input type="checkbox" class="rounded text-purple-600" checked>
+                                <span>Quality control performed and documented</span>
+                            </label>
+                            <label class="flex items-center space-x-2">
+                                <input type="checkbox" class="rounded text-purple-600" checked>
+                                <span>Personnel competency assessments current</span>
+                            </label>
+                            <label class="flex items-center space-x-2">
+                                <input type="checkbox" class="rounded text-purple-600">
+                                <span class="text-red-600">Proficiency testing enrollment confirmed</span>
+                            </label>
+                        </div>
+                    </details>
                 </div>
                  <div id="compliance-wi-meb" class="bg-white p-6 rounded-lg shadow-sm border-l-4 border-green-500">
-                    <h3 class="text-lg font-semibold text-green-800">WI Medical Examining Board (MEB)</h3>
-                    <p class="mt-2 text-sm text-gray-600">Governs the practice of medicine in Wisconsin. Key rules include standards of professional conduct (Med 10), telehealth requirements (Med 24), record-keeping (5-year retention), and truthful advertising. All care must meet the standard of minimally competent medical practice.</p>
+                    <div class="flex justify-between items-start mb-3">
+                        <h3 class="text-lg font-semibold text-green-800">WI Medical Examining Board (MEB)</h3>
+                        <span class="text-xs bg-green-100 text-green-800 px-2 py-1 rounded">100% Complete</span>
+                    </div>
+                    <p class="mt-2 text-sm text-gray-600 mb-4">Governs the practice of medicine in Wisconsin.</p>
+                    
+                    <details class="mt-3">
+                        <summary class="cursor-pointer text-sm font-medium text-green-700 hover:text-green-900">View Compliance Checklist</summary>
+                        <div class="mt-3 space-y-2 text-sm">
+                            <label class="flex items-center space-x-2">
+                                <input type="checkbox" class="rounded text-green-600" checked>
+                                <span>Medical license current and displayed</span>
+                            </label>
+                            <label class="flex items-center space-x-2">
+                                <input type="checkbox" class="rounded text-green-600" checked>
+                                <span>Professional conduct standards (Med 10) compliance</span>
+                            </label>
+                            <label class="flex items-center space-x-2">
+                                <input type="checkbox" class="rounded text-green-600" checked>
+                                <span>Telehealth requirements (Med 24) met</span>
+                            </label>
+                            <label class="flex items-center space-x-2">
+                                <input type="checkbox" class="rounded text-green-600" checked>
+                                <span>Medical records retention policy (5 years)</span>
+                            </label>
+                            <label class="flex items-center space-x-2">
+                                <input type="checkbox" class="rounded text-green-600" checked>
+                                <span>Advertising compliance verified</span>
+                            </label>
+                        </div>
+                    </details>
                 </div>
                  <div id="compliance-wi-dpc" class="bg-white p-6 rounded-lg shadow-sm border-l-4 border-teal-500">
                     <h3 class="text-lg font-semibold text-teal-800">WI DPC & Patient Rights Law</h3>
@@ -2120,11 +2360,11 @@ document.addEventListener('DOMContentLoaded', function () {
         switchSpecializedTab(specializedTabButtons[0].dataset.specializedTab);
     }
 
-    // Enhanced chart functionality with better error handling
+    // Compliance chart functionality (kept for future use if needed)
     function createComplianceChart() {
         const canvas = document.getElementById('complianceChart');
         if (!canvas) {
-            console.warn('Compliance chart canvas not found');
+            // Chart element removed in favor of interactive compliance tracker
             return;
         }
 
@@ -2311,6 +2551,433 @@ document.addEventListener('DOMContentLoaded', function () {
     // Compliance Dashboard Functions
     let complianceData = null;
     let complianceRefreshInterval = null;
+
+    // Compliance details modal functions
+    function showComplianceDetails(area) {
+        const modal = document.getElementById('compliance-details-modal');
+        const modalTitle = document.getElementById('modal-title');
+        const modalContent = document.getElementById('modal-content');
+        
+        const details = {
+            'hipaa': {
+                title: 'HIPAA Compliance Details',
+                color: 'blue',
+                content: `
+                    <div class="space-y-4">
+                        <div class="bg-blue-50 p-3 rounded">
+                            <h4 class="font-semibold text-blue-900 mb-2">Key Requirements</h4>
+                            <ul class="text-sm space-y-1 text-blue-800">
+                                <li>• Privacy Rule: Protect patient health information</li>
+                                <li>• Security Rule: Safeguard electronic PHI</li>
+                                <li>• Breach Notification: Report breaches within 60 days</li>
+                                <li>• Minimum Necessary: Only access/share what's needed</li>
+                            </ul>
+                        </div>
+                        <div class="bg-white p-3 rounded border border-gray-200">
+                            <h4 class="font-semibold mb-2">Action Items</h4>
+                            <ul class="text-sm space-y-2">
+                                <li class="flex items-start">
+                                    <i class="fa-solid fa-exclamation-circle text-red-500 mt-0.5 mr-2"></i>
+                                    <span>Update breach notification procedures by month end</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fa-solid fa-exclamation-circle text-red-500 mt-0.5 mr-2"></i>
+                                    <span>Schedule annual HIPAA training for all staff</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <button onclick="navigateTo('practice-safety')" class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700">
+                            View Full HIPAA Policies
+                        </button>
+                    </div>
+                `
+            },
+            'osha': {
+                title: 'OSHA Compliance Details',
+                color: 'orange',
+                content: `
+                    <div class="space-y-4">
+                        <div class="bg-orange-50 p-3 rounded">
+                            <h4 class="font-semibold text-orange-900 mb-2">Key Requirements</h4>
+                            <ul class="text-sm space-y-1 text-orange-800">
+                                <li>• Bloodborne Pathogen Control Plan</li>
+                                <li>• Hazard Communication Program</li>
+                                <li>• Personal Protective Equipment</li>
+                                <li>• Annual Safety Training</li>
+                            </ul>
+                        </div>
+                        <div class="bg-white p-3 rounded border border-gray-200">
+                            <h4 class="font-semibold mb-2">Action Items</h4>
+                            <ul class="text-sm space-y-2">
+                                <li class="flex items-start">
+                                    <i class="fa-solid fa-clock text-yellow-500 mt-0.5 mr-2"></i>
+                                    <span>Annual OSHA training due in 15 days</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <button onclick="navigateTo('practice-safety')" class="w-full bg-orange-600 text-white py-2 rounded hover:bg-orange-700">
+                            View OSHA Procedures
+                        </button>
+                    </div>
+                `
+            },
+            'clia': {
+                title: 'CLIA Compliance Details',
+                color: 'purple',
+                content: `
+                    <div class="space-y-4">
+                        <div class="bg-purple-50 p-3 rounded">
+                            <h4 class="font-semibold text-purple-900 mb-2">Key Requirements</h4>
+                            <ul class="text-sm space-y-1 text-purple-800">
+                                <li>• Certificate of Waiver maintenance</li>
+                                <li>• Quality control documentation</li>
+                                <li>• Personnel competency assessments</li>
+                                <li>• Proficiency testing (if applicable)</li>
+                            </ul>
+                        </div>
+                        <div class="bg-white p-3 rounded border border-gray-200">
+                            <h4 class="font-semibold mb-2">Action Items</h4>
+                            <ul class="text-sm space-y-2">
+                                <li class="flex items-start">
+                                    <i class="fa-solid fa-check-circle text-green-500 mt-0.5 mr-2"></i>
+                                    <span>All requirements currently met</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <button onclick="navigateTo('practice-safety')" class="w-full bg-purple-600 text-white py-2 rounded hover:bg-purple-700">
+                            View CLIA Procedures
+                        </button>
+                    </div>
+                `
+            },
+            'wi-meb': {
+                title: 'WI Medical Examining Board Compliance',
+                color: 'green',
+                content: `
+                    <div class="space-y-4">
+                        <div class="bg-green-50 p-3 rounded">
+                            <h4 class="font-semibold text-green-900 mb-2">Key Requirements</h4>
+                            <ul class="text-sm space-y-1 text-green-800">
+                                <li>• Medical license maintenance</li>
+                                <li>• Professional conduct standards</li>
+                                <li>• Telehealth compliance (Med 24)</li>
+                                <li>• Record retention (5 years)</li>
+                            </ul>
+                        </div>
+                        <div class="bg-white p-3 rounded border border-gray-200">
+                            <h4 class="font-semibold mb-2">Status</h4>
+                            <p class="text-sm text-green-600">✓ All requirements met - excellent compliance</p>
+                        </div>
+                        <button onclick="window.open('https://dsps.wi.gov/Pages/Industry-Services/Professional-Services/Medical-Examining-Board/default.aspx', '_blank')" class="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700">
+                            Visit WI Medical Board
+                        </button>
+                    </div>
+                `
+            },
+            'wi-dpc': {
+                title: 'WI DPC & Patient Rights Compliance',
+                color: 'teal',
+                content: `
+                    <div class="space-y-4">
+                        <div class="bg-teal-50 p-3 rounded">
+                            <h4 class="font-semibold text-teal-900 mb-2">Key Requirements</h4>
+                            <ul class="text-sm space-y-1 text-teal-800">
+                                <li>• DPC agreement compliance</li>
+                                <li>• Patient rights protection</li>
+                                <li>• Mental health record rules</li>
+                                <li>• Minor consent procedures</li>
+                            </ul>
+                        </div>
+                        <div class="bg-white p-3 rounded border border-gray-200">
+                            <h4 class="font-semibold mb-2">Action Items</h4>
+                            <ul class="text-sm space-y-2">
+                                <li class="flex items-start">
+                                    <i class="fa-solid fa-exclamation-circle text-yellow-500 mt-0.5 mr-2"></i>
+                                    <span>Review updated DPC regulations</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <button onclick="navigateTo('patient-journey')" class="w-full bg-teal-600 text-white py-2 rounded hover:bg-teal-700">
+                            View DPC Agreement Requirements
+                        </button>
+                    </div>
+                `
+            },
+            'wi-dnr': {
+                title: 'WI DNR Environmental Safety',
+                color: 'gray',
+                content: `
+                    <div class="space-y-4">
+                        <div class="bg-gray-50 p-3 rounded">
+                            <h4 class="font-semibold text-gray-900 mb-2">Key Requirements</h4>
+                            <ul class="text-sm space-y-1 text-gray-800">
+                                <li>• Medical waste disposal</li>
+                                <li>• Sharps container management</li>
+                                <li>• Licensed hauler contracts</li>
+                                <li>• 5-year record retention</li>
+                            </ul>
+                        </div>
+                        <div class="bg-white p-3 rounded border border-gray-200">
+                            <h4 class="font-semibold mb-2">Status</h4>
+                            <p class="text-sm text-green-600">✓ Excellent compliance - all procedures current</p>
+                        </div>
+                        <button onclick="navigateTo('practice-safety')" class="w-full bg-gray-600 text-white py-2 rounded hover:bg-gray-700">
+                            View Waste Management Procedures
+                        </button>
+                    </div>
+                `
+            }
+        };
+        
+        if (details[area]) {
+            modalTitle.textContent = details[area].title;
+            modalContent.innerHTML = details[area].content;
+            modal.classList.remove('hidden');
+        }
+    }
+    
+    function closeComplianceDetails() {
+        const modal = document.getElementById('compliance-details-modal');
+        modal.classList.add('hidden');
+    }
+
+    // Compliance task management functions
+    function showComplianceTask(taskId) {
+        const taskDetails = {
+            'osha-training': {
+                title: 'Annual OSHA Training',
+                description: 'Required annual training on workplace safety and bloodborne pathogens.',
+                requirements: [
+                    'Bloodborne Pathogen Safety Training',
+                    'Hazard Communication Training',
+                    'Personal Protective Equipment (PPE) Training',
+                    'Emergency Response Procedures'
+                ],
+                dueDate: 'Due in 15 days',
+                action: 'Schedule training session with all staff'
+            },
+            'hipaa-assessment': {
+                title: 'HIPAA Security Risk Assessment',
+                description: 'Annual assessment of security measures for protecting patient health information.',
+                requirements: [
+                    'Review all systems that store PHI',
+                    'Assess physical and technical safeguards',
+                    'Document potential vulnerabilities',
+                    'Create action plan for improvements',
+                    'Update security policies as needed'
+                ],
+                dueDate: 'Due in 30 days',
+                action: 'Begin assessment checklist'
+            }
+        };
+
+        const task = taskDetails[taskId];
+        if (!task) return;
+
+        const modal = document.getElementById('compliance-details-modal');
+        const modalTitle = document.getElementById('modal-title');
+        const modalContent = document.getElementById('modal-content');
+
+        modalTitle.textContent = task.title;
+        modalContent.innerHTML = `
+            <div class="space-y-4">
+                <div class="bg-gray-50 p-3 rounded">
+                    <p class="text-sm text-gray-700">${task.description}</p>
+                    <p class="text-sm font-medium text-red-600 mt-2">${task.dueDate}</p>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-2">Requirements:</h4>
+                    <ul class="text-sm space-y-1">
+                        ${task.requirements.map(req => `<li class="flex items-start"><i class="fa-solid fa-circle text-gray-400 text-xs mt-1.5 mr-2"></i>${req}</li>`).join('')}
+                    </ul>
+                </div>
+                <div class="bg-blue-50 p-3 rounded">
+                    <h4 class="font-semibold text-blue-900 mb-2">Next Action:</h4>
+                    <p class="text-sm text-blue-800">${task.action}</p>
+                </div>
+                <div class="flex space-x-2">
+                    <button onclick="startComplianceTask('${taskId}')" class="flex-1 bg-blue-600 text-white py-2 rounded hover:bg-blue-700">
+                        Start Task
+                    </button>
+                    <button onclick="scheduleComplianceTask('${taskId}')" class="flex-1 bg-gray-600 text-white py-2 rounded hover:bg-gray-700">
+                        Schedule Later
+                    </button>
+                </div>
+            </div>
+        `;
+        
+        modal.classList.remove('hidden');
+    }
+
+    function startComplianceTask(taskId) {
+        // Close any open modals
+        closeComplianceDetails();
+        
+        // Define task actions
+        const taskActions = {
+            'hipaa-assessment': () => {
+                // Create and show HIPAA assessment checklist
+                showHIPAARiskAssessment();
+            },
+            'osha-training': () => {
+                // Navigate to OSHA training resources
+                alert('Redirecting to OSHA training scheduler...\n\nNext steps:\n1. Contact training provider\n2. Schedule session for all staff\n3. Book conference room\n4. Send calendar invites');
+            }
+        };
+
+        if (taskActions[taskId]) {
+            taskActions[taskId]();
+        } else {
+            alert('Task started! This would typically open the relevant form or checklist.');
+        }
+    }
+
+    function scheduleComplianceTask(taskId) {
+        closeComplianceDetails();
+        
+        const scheduleModal = document.createElement('div');
+        scheduleModal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
+        scheduleModal.innerHTML = `
+            <div class="bg-white p-6 rounded-lg max-w-md w-full mx-4">
+                <h3 class="text-lg font-semibold mb-4">Schedule Reminder</h3>
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Reminder Date:</label>
+                        <input type="date" id="reminder-date" class="w-full border rounded px-3 py-2" 
+                               value="${new Date(Date.now() + 7*24*60*60*1000).toISOString().split('T')[0]}">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Notes:</label>
+                        <textarea id="reminder-notes" class="w-full border rounded px-3 py-2 h-20" 
+                                  placeholder="Add any notes about this task..."></textarea>
+                    </div>
+                    <div class="flex space-x-2">
+                        <button onclick="this.closest('.fixed').remove()" class="flex-1 border border-gray-300 py-2 rounded hover:bg-gray-50">
+                            Cancel
+                        </button>
+                        <button onclick="saveReminder('${taskId}'); this.closest('.fixed').remove()" class="flex-1 bg-blue-600 text-white py-2 rounded hover:bg-blue-700">
+                            Set Reminder
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        document.body.appendChild(scheduleModal);
+    }
+
+    function saveReminder(taskId) {
+        const date = document.getElementById('reminder-date').value;
+        const notes = document.getElementById('reminder-notes').value;
+        
+        // In a real implementation, this would save to a calendar or task system
+        alert(`Reminder set for ${new Date(date).toLocaleDateString()}!\n\nThis would typically:\n• Add to your calendar\n• Send email notification\n• Update task tracking system`);
+        
+        // Show success message
+        const successMsg = document.createElement('div');
+        successMsg.className = 'fixed bottom-4 right-4 bg-green-600 text-white px-6 py-3 rounded-lg shadow-lg';
+        successMsg.innerHTML = '<i class="fa-solid fa-check mr-2"></i>Reminder scheduled successfully!';
+        document.body.appendChild(successMsg);
+        
+        setTimeout(() => successMsg.remove(), 3000);
+    }
+
+    function showHIPAARiskAssessment() {
+        // Create HIPAA Risk Assessment modal
+        const assessmentModal = document.createElement('div');
+        assessmentModal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 overflow-y-auto';
+        assessmentModal.innerHTML = `
+            <div class="bg-white p-6 rounded-lg max-w-4xl w-full mx-4 my-8">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-xl font-semibold">HIPAA Security Risk Assessment</h3>
+                    <button onclick="this.closest('.fixed').remove()" class="text-gray-500 hover:text-gray-700">
+                        <i class="fa-solid fa-times text-xl"></i>
+                    </button>
+                </div>
+                
+                <div class="space-y-6">
+                    <div class="bg-blue-50 p-4 rounded">
+                        <h4 class="font-semibold text-blue-900 mb-2">Assessment Overview</h4>
+                        <p class="text-sm text-blue-800">This assessment helps identify potential security vulnerabilities in your practice's handling of Protected Health Information (PHI).</p>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="space-y-4">
+                            <h4 class="font-semibold">Physical Safeguards</h4>
+                            <div class="space-y-2 text-sm">
+                                <label class="flex items-center space-x-2">
+                                    <input type="checkbox" class="rounded">
+                                    <span>Workstations are positioned to prevent unauthorized viewing</span>
+                                </label>
+                                <label class="flex items-center space-x-2">
+                                    <input type="checkbox" class="rounded">
+                                    <span>Computer screens lock automatically when idle</span>
+                                </label>
+                                <label class="flex items-center space-x-2">
+                                    <input type="checkbox" class="rounded">
+                                    <span>Physical access to servers/systems is restricted</span>
+                                </label>
+                                <label class="flex items-center space-x-2">
+                                    <input type="checkbox" class="rounded">
+                                    <span>Paper records are secured when not in use</span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="space-y-4">
+                            <h4 class="font-semibold">Technical Safeguards</h4>
+                            <div class="space-y-2 text-sm">
+                                <label class="flex items-center space-x-2">
+                                    <input type="checkbox" class="rounded">
+                                    <span>Strong password policies are enforced</span>
+                                </label>
+                                <label class="flex items-center space-x-2">
+                                    <input type="checkbox" class="rounded">
+                                    <span>Software is regularly updated</span>
+                                </label>
+                                <label class="flex items-center space-x-2">
+                                    <input type="checkbox" class="rounded">
+                                    <span>Antivirus protection is current</span>
+                                </label>
+                                <label class="flex items-center space-x-2">
+                                    <input type="checkbox" class="rounded">
+                                    <span>Data is encrypted during transmission</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="border-t pt-4">
+                        <div class="flex space-x-2">
+                            <button onclick="this.closest('.fixed').remove()" class="flex-1 border border-gray-300 py-2 rounded hover:bg-gray-50">
+                                Save & Continue Later
+                            </button>
+                            <button onclick="completeAssessment()" class="flex-1 bg-blue-600 text-white py-2 rounded hover:bg-blue-700">
+                                Complete Assessment
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        document.body.appendChild(assessmentModal);
+    }
+
+    function completeAssessment() {
+        alert('Assessment completed!\n\nNext steps:\n• Review findings\n• Create action plan\n• Document improvements\n• Schedule follow-up');
+        
+        // Remove modal
+        document.querySelector('.fixed.inset-0').remove();
+        
+        // Show success message
+        const successMsg = document.createElement('div');
+        successMsg.className = 'fixed bottom-4 right-4 bg-green-600 text-white px-6 py-3 rounded-lg shadow-lg';
+        successMsg.innerHTML = '<i class="fa-solid fa-check mr-2"></i>HIPAA Assessment completed!';
+        document.body.appendChild(successMsg);
+        
+        setTimeout(() => successMsg.remove(), 3000);
+    }
 
     async function fetchComplianceData() {
         try {
