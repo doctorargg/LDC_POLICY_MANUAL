@@ -2586,7 +2586,7 @@ document.addEventListener('DOMContentLoaded', function () {
                                 </li>
                             </ul>
                         </div>
-                        <button onclick="navigateTo('practice-safety')" class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700">
+                        <button onclick="navigateToSection('practice-safety', 'compliance-hipaa')" class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700">
                             View Full HIPAA Policies
                         </button>
                     </div>
@@ -2615,7 +2615,7 @@ document.addEventListener('DOMContentLoaded', function () {
                                 </li>
                             </ul>
                         </div>
-                        <button onclick="navigateTo('practice-safety')" class="w-full bg-orange-600 text-white py-2 rounded hover:bg-orange-700">
+                        <button onclick="navigateToSection('practice-safety', 'compliance-osha')" class="w-full bg-orange-600 text-white py-2 rounded hover:bg-orange-700">
                             View OSHA Procedures
                         </button>
                     </div>
@@ -2644,7 +2644,7 @@ document.addEventListener('DOMContentLoaded', function () {
                                 </li>
                             </ul>
                         </div>
-                        <button onclick="navigateTo('practice-safety')" class="w-full bg-purple-600 text-white py-2 rounded hover:bg-purple-700">
+                        <button onclick="navigateToSection('practice-safety', 'compliance-clia')" class="w-full bg-purple-600 text-white py-2 rounded hover:bg-purple-700">
                             View CLIA Procedures
                         </button>
                     </div>
@@ -2697,7 +2697,7 @@ document.addEventListener('DOMContentLoaded', function () {
                                 </li>
                             </ul>
                         </div>
-                        <button onclick="navigateTo('patient-journey')" class="w-full bg-teal-600 text-white py-2 rounded hover:bg-teal-700">
+                        <button onclick="navigateToSection('patient-journey', 'dpc-agreement-accordion')" class="w-full bg-teal-600 text-white py-2 rounded hover:bg-teal-700">
                             View DPC Agreement Requirements
                         </button>
                     </div>
@@ -2721,7 +2721,7 @@ document.addEventListener('DOMContentLoaded', function () {
                             <h4 class="font-semibold mb-2">Status</h4>
                             <p class="text-sm text-green-600">✓ Excellent compliance - all procedures current</p>
                         </div>
-                        <button onclick="navigateTo('practice-safety')" class="w-full bg-gray-600 text-white py-2 rounded hover:bg-gray-700">
+                        <button onclick="navigateToSection('practice-safety', 'compliance-wi-dnr')" class="w-full bg-gray-600 text-white py-2 rounded hover:bg-gray-700">
                             View Waste Management Procedures
                         </button>
                     </div>
@@ -2739,6 +2739,11 @@ document.addEventListener('DOMContentLoaded', function () {
     function closeComplianceDetails() {
         const modal = document.getElementById('compliance-details-modal');
         modal.classList.add('hidden');
+    }
+    
+    // Navigate to specific section within a page
+    function navigateToSection(pageId, sectionId) {
+        navigateTo(pageId, sectionId);
     }
 
     // Compliance task management functions
