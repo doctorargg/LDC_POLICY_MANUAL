@@ -1,0 +1,21 @@
+{
+  "name": "lotus-direct-care-policy-manual",
+  "version": "1.0.0",
+  "description": "Interactive Policy Manual with Google Workspace Integration",
+  "scripts": {
+    "dev": "netlify dev",
+    "build": "echo 'No build step required'",
+    "test": "node test/compliance.test.js",
+    "test:browser": "open test/test-runner.html",
+    "deploy": "netlify deploy --prod"
+  },
+  "dependencies": {
+    "@google-cloud/local-auth": "^3.0.0",
+    "@netlify/functions": "^2.4.0",
+    "google-auth-library": "^9.2.0",
+    "googleapis": "^126.0.1"
+  },
+  "devDependencies": {
+    "netlify-cli": "^17.0.0"
+  }
+}

@@ -359,11 +359,11 @@
         <nav class="container mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
                 <div class="flex items-center">
-                    <div class="h-10 w-10 mr-3 flex items-center justify-center">
-                        <img src="Logosmallcropped.png" alt="Lotus Direct Care" class="h-8 w-8 object-contain">
+                    <div class="h-14 w-14 mr-3 flex items-center justify-center">
+                        <img src="SMALLLOGOTRANSPARENTBG.png" alt="Lotus Direct Care" class="h-12 w-12 object-contain">
                     </div>
                     <div>
-                        <span class="text-xl font-bold text-[#4C6B57]">Lotus Direct Care</span>
+                        <span class="text-2xl font-bold text-[#4C6B57]">Lotus Direct Care</span>
                         <span class="ml-2 text-sm text-gray-500 hidden md:inline">Policy Manual</span>
                     </div>
                 </div>
@@ -421,6 +421,70 @@
                         <div class="emergency-card bg-yellow-50 p-4 rounded-lg">
                             <h3 class="font-bold text-yellow-800"><i class="fa-solid fa-flask-vial mr-2"></i>Poison Control</h3>
                             <p class="text-gray-700">1-800-222-1222</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Compliance Status Widget -->
+                <div class="card bg-white p-6 rounded-lg shadow-md col-span-1 md:col-span-2 lg:col-span-3" id="dashboard-compliance-widget">
+                    <div class="flex justify-between items-center mb-4">
+                        <h2 class="text-xl font-semibold text-[#4C6B57]">Compliance Status Overview</h2>
+                        <a href="#" class="text-sm text-blue-600 hover:underline" data-target="compliance-center">View Details →</a>
+                    </div>
+                    
+                    <!-- Loading State -->
+                    <div id="widget-loading" class="text-center py-4">
+                        <i class="fa-solid fa-spinner fa-spin text-2xl text-[#7D9A89]"></i>
+                        <p class="text-sm text-gray-600 mt-2">Loading compliance data...</p>
+                    </div>
+                    
+                    <!-- Compliance Metrics -->
+                    <div id="widget-content" class="hidden">
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                            <div class="text-center">
+                                <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-green-100 mb-2">
+                                    <span class="text-2xl font-bold text-green-800" id="widget-percentage">--%</span>
+                                </div>
+                                <p class="text-sm text-gray-600">Overall Compliance</p>
+                            </div>
+                            <div class="text-center">
+                                <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-red-100 mb-2">
+                                    <span class="text-2xl font-bold text-red-800" id="widget-expired">0</span>
+                                </div>
+                                <p class="text-sm text-gray-600">Expired</p>
+                            </div>
+                            <div class="text-center">
+                                <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-yellow-100 mb-2">
+                                    <span class="text-2xl font-bold text-yellow-800" id="widget-expiring">0</span>
+                                </div>
+                                <p class="text-sm text-gray-600">Expiring Soon</p>
+                            </div>
+                            <div class="text-center">
+                                <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-blue-100 mb-2">
+                                    <span class="text-2xl font-bold text-blue-800" id="widget-current">0</span>
+                                </div>
+                                <p class="text-sm text-gray-600">Current</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Alert for critical items -->
+                        <div id="widget-alert" class="hidden mt-4 bg-red-50 border-l-4 border-red-400 p-3">
+                            <div class="flex items-center">
+                                <i class="fa-solid fa-exclamation-circle text-red-400 mr-2"></i>
+                                <p class="text-sm text-red-700">
+                                    <span id="widget-alert-text"></span>
+                                    <a href="#" class="ml-2 font-semibold underline" data-target="compliance-center">Review Now</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Error State -->
+                    <div id="widget-error" class="hidden">
+                        <div class="text-center py-4">
+                            <i class="fa-solid fa-exclamation-triangle text-2xl text-yellow-500 mb-2"></i>
+                            <p class="text-sm text-gray-600">Unable to load compliance data</p>
+                            <a href="#" class="text-sm text-blue-600 hover:underline mt-2" data-target="compliance-center">Open Compliance Center</a>
                         </div>
                     </div>
                 </div>
@@ -1389,12 +1453,288 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="bg-white rounded-lg shadow-sm">
+                    <div class="accordion-header p-5 flex justify-between items-center border-b">
+                        <h2 class="text-xl font-semibold text-gray-800"><i class="fa-solid fa-ambulance mr-3 text-[#7D9A89]"></i>Emergency Response Procedures</h2>
+                        <i class="fa-solid fa-chevron-down accordion-icon"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="p-5 text-gray-700 space-y-4">
+                            <p>Comprehensive emergency procedures ensure the safety of patients, staff, and visitors. All staff must be familiar with these protocols and participate in regular drills.</p>
+                            
+                            <div class="bg-red-50 border-l-4 border-red-400 p-4 mb-4">
+                                <div class="flex">
+                                    <div class="flex-shrink-0">
+                                        <i class="fa-solid fa-phone-volume text-red-400 text-xl"></i>
+                                    </div>
+                                    <div class="ml-3">
+                                        <h4 class="text-lg font-semibold text-red-800">Emergency Contacts</h4>
+                                        <ul class="mt-2 text-sm space-y-1">
+                                            <li><strong>911</strong> - Medical/Fire/Police Emergency</li>
+                                            <li><strong>(262) 284-8170</strong> - Ozaukee Public Health</li>
+                                            <li><strong>1-800-222-1222</strong> - Poison Control Center</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="callout p-4 rounded-md">
+                                <h4 class="font-semibold text-gray-800"><i class="fa-solid fa-user-doctor mr-2"></i>Medical Emergency Response</h4>
+                                <ol class="list-decimal list-inside text-sm space-y-2 mt-2">
+                                    <li><strong>Assess the Situation:</strong> Ensure scene safety before approaching patient</li>
+                                    <li><strong>Call 911:</strong> Designate one person to call and provide clear information:
+                                        <ul class="list-disc list-inside ml-6 mt-1">
+                                            <li>Exact location within facility</li>
+                                            <li>Nature of emergency</li>
+                                            <li>Patient condition and vital signs if available</li>
+                                        </ul>
+                                    </li>
+                                    <li><strong>Provide Care:</strong> Within scope of training (CPR, first aid, oxygen if trained)</li>
+                                    <li><strong>Assign Roles:</strong>
+                                        <ul class="list-disc list-inside ml-6 mt-1">
+                                            <li>One person to meet EMS at entrance</li>
+                                            <li>One person to clear pathway</li>
+                                            <li>One person to gather patient records/medication list</li>
+                                        </ul>
+                                    </li>
+                                    <li><strong>Document:</strong> Complete incident report within 24 hours</li>
+                                </ol>
+                            </div>
+
+                            <div class="callout p-4 rounded-md">
+                                <h4 class="font-semibold text-gray-800"><i class="fa-solid fa-fire-extinguisher mr-2"></i>Fire Emergency Procedures</h4>
+                                <div class="bg-orange-100 border border-orange-300 rounded p-3 mt-2 mb-3">
+                                    <h5 class="font-bold text-orange-800">R.A.C.E. Protocol</h5>
+                                    <ul class="text-sm mt-1 space-y-1">
+                                        <li><strong>R</strong>escue - Remove patients/staff from immediate danger</li>
+                                        <li><strong>A</strong>larm - Pull fire alarm and call 911</li>
+                                        <li><strong>C</strong>ontain - Close doors to prevent spread</li>
+                                        <li><strong>E</strong>vacuate/Extinguish - Evacuate if necessary or use extinguisher if safe</li>
+                                    </ul>
+                                </div>
+                                <p class="text-sm"><strong>Evacuation Assembly Point:</strong> [Insert specific location for your facility]</p>
+                                <p class="text-sm"><strong>Staff Responsibilities:</strong> Account for all patients, assist those with mobility issues</p>
+                            </div>
+
+                            <div class="callout p-4 rounded-md">
+                                <h4 class="font-semibold text-gray-800"><i class="fa-solid fa-tornado mr-2"></i>Severe Weather Procedures</h4>
+                                <ul class="list-disc list-inside text-sm space-y-2 mt-2">
+                                    <li><strong>Tornado Warning:</strong> Move all patients and staff to designated safe area (interior room, lowest floor, away from windows)</li>
+                                    <li><strong>Power Outage:</strong> 
+                                        <ul class="list-disc list-inside ml-6 mt-1">
+                                            <li>Switch to emergency lighting</li>
+                                            <li>Preserve battery power on critical equipment</li>
+                                            <li>Cancel non-urgent appointments</li>
+                                            <li>Monitor temperature-sensitive medications</li>
+                                        </ul>
+                                    </li>
+                                    <li><strong>Communication:</strong> Use battery-powered radio for updates</li>
+                                </ul>
+                            </div>
+
+                            <div class="callout p-4 rounded-md">
+                                <h4 class="font-semibold text-gray-800"><i class="fa-solid fa-kit-medical mr-2"></i>Emergency Equipment & Supplies</h4>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2">
+                                    <div>
+                                        <h5 class="font-semibold text-sm">Medical Emergency Kit</h5>
+                                        <ul class="list-disc list-inside text-sm space-y-1 mt-1">
+                                            <li>AED (Automated External Defibrillator)</li>
+                                            <li>Oxygen tank and delivery devices</li>
+                                            <li>Blood pressure monitor</li>
+                                            <li>Pulse oximeter</li>
+                                            <li>Glucose meter and supplies</li>
+                                            <li>Basic airway management tools</li>
+                                            <li>Emergency medications (per physician orders)</li>
+                                        </ul>
+                                    </div>
+                                    <div>
+                                        <h5 class="font-semibold text-sm">General Emergency Supplies</h5>
+                                        <ul class="list-disc list-inside text-sm space-y-1 mt-1">
+                                            <li>First aid supplies</li>
+                                            <li>Fire extinguishers (inspected monthly)</li>
+                                            <li>Flashlights and batteries</li>
+                                            <li>Emergency contact list</li>
+                                            <li>Evacuation maps</li>
+                                            <li>Blankets</li>
+                                            <li>Portable radio</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="callout p-4 rounded-md">
+                                <h4 class="font-semibold text-gray-800"><i class="fa-solid fa-user-shield mr-2"></i>Violence/Security Threat Response</h4>
+                                <ul class="list-disc list-inside text-sm space-y-2 mt-2">
+                                    <li><strong>Prevention:</strong> Maintain controlled access, visitor management, adequate lighting</li>
+                                    <li><strong>De-escalation:</strong> Remain calm, speak softly, maintain safe distance, avoid arguing</li>
+                                    <li><strong>Code Word/Phrase:</strong> Establish a phrase to alert staff of danger without alarming the threat</li>
+                                    <li><strong>If Violence Occurs:</strong>
+                                        <ul class="list-disc list-inside ml-6 mt-1">
+                                            <li>Call 911 immediately</li>
+                                            <li>Evacuate if safe to do so</li>
+                                            <li>If unable to evacuate: lock doors, turn off lights, silence phones, hide</li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div class="bg-blue-50 border-l-4 border-blue-400 p-4">
+                                <h4 class="font-semibold text-blue-800"><i class="fa-solid fa-clipboard-check mr-2"></i>Training & Drills</h4>
+                                <ul class="list-disc list-inside text-sm space-y-1 mt-2">
+                                    <li><strong>Initial Training:</strong> All new staff within 30 days of hire</li>
+                                    <li><strong>Annual Review:</strong> Emergency procedures refresher for all staff</li>
+                                    <li><strong>Fire Drills:</strong> Conducted quarterly, documented</li>
+                                    <li><strong>Medical Emergency Drills:</strong> Semi-annually</li>
+                                    <li><strong>Severe Weather Drills:</strong> Annually before tornado season</li>
+                                    <li><strong>Documentation:</strong> Maintain training records and drill reports</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
 
         <section id="compliance-center" class="page-content">
             <h1 class="text-3xl font-bold text-[#4C6B57] mb-4">Compliance Center</h1>
-            <p class="text-lg text-gray-600 mb-8">This section provides a centralized overview of the key federal and state regulations governing Lotus Direct Care. Use this area for high-level summaries, compliance checks, and quick access to detailed policies.</p>
+            <p class="text-lg text-gray-600 mb-8">Real-time compliance monitoring powered by Google Workspace integration. This dashboard automatically tracks licenses, certifications, and policy compliance status.</p>
+
+            <!-- Real-time Compliance Dashboard -->
+            <div class="bg-white p-6 rounded-lg shadow-md mb-8" id="compliance-dashboard">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-xl font-semibold text-gray-800">Live Compliance Status</h2>
+                    <div class="flex space-x-2">
+                        <button onclick="exportComplianceData('csv')" class="bg-gray-600 text-white px-4 py-2 rounded-md hover:bg-gray-700 transition-colors flex items-center">
+                            <i class="fa-solid fa-download mr-2"></i>Export CSV
+                        </button>
+                        <button onclick="exportComplianceData('json')" class="bg-gray-600 text-white px-4 py-2 rounded-md hover:bg-gray-700 transition-colors flex items-center">
+                            <i class="fa-solid fa-code mr-2"></i>Export JSON
+                        </button>
+                        <button onclick="refreshComplianceData()" class="bg-[#4C6B57] text-white px-4 py-2 rounded-md hover:bg-[#7D9A89] transition-colors flex items-center">
+                            <i class="fa-solid fa-sync-alt mr-2"></i>Refresh
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Loading State -->
+                <div id="compliance-loading" class="text-center py-8">
+                    <i class="fa-solid fa-spinner fa-spin text-4xl text-[#7D9A89] mb-4"></i>
+                    <p class="text-gray-600">Loading compliance data...</p>
+                </div>
+
+                <!-- Compliance Metrics -->
+                <div id="compliance-metrics" class="hidden">
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+                        <div class="bg-green-50 border border-green-200 rounded-lg p-4">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-sm text-green-600 font-semibold">Overall Compliance</p>
+                                    <p class="text-2xl font-bold text-green-800" id="overall-percentage">--%</p>
+                                </div>
+                                <i class="fa-solid fa-check-circle text-3xl text-green-500"></i>
+                            </div>
+                        </div>
+                        <div class="bg-red-50 border border-red-200 rounded-lg p-4">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-sm text-red-600 font-semibold">Expired Items</p>
+                                    <p class="text-2xl font-bold text-red-800" id="expired-count">0</p>
+                                </div>
+                                <i class="fa-solid fa-exclamation-circle text-3xl text-red-500"></i>
+                            </div>
+                        </div>
+                        <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-sm text-yellow-600 font-semibold">Expiring Soon</p>
+                                    <p class="text-2xl font-bold text-yellow-800" id="expiring-count">0</p>
+                                </div>
+                                <i class="fa-solid fa-clock text-3xl text-yellow-500"></i>
+                            </div>
+                        </div>
+                        <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-sm text-blue-600 font-semibold">Last Updated</p>
+                                    <p class="text-sm font-bold text-blue-800" id="last-updated">--</p>
+                                </div>
+                                <i class="fa-solid fa-sync text-3xl text-blue-500"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Expiring Documents Alert -->
+                    <div id="expiring-alert" class="hidden bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-6">
+                        <div class="flex">
+                            <div class="flex-shrink-0">
+                                <i class="fa-solid fa-exclamation-triangle text-yellow-400"></i>
+                            </div>
+                            <div class="ml-3">
+                                <h3 class="text-sm font-medium text-yellow-800">Documents Requiring Attention</h3>
+                                <div class="mt-2 text-sm text-yellow-700">
+                                    <ul id="expiring-list" class="list-disc list-inside space-y-1">
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Compliance Categories -->
+                    <div class="space-y-4">
+                        <div class="border rounded-lg overflow-hidden">
+                            <div class="bg-gray-50 px-4 py-3 border-b">
+                                <h3 class="text-lg font-semibold text-gray-800">
+                                    <i class="fa-solid fa-id-card mr-2 text-[#7D9A89]"></i>Licenses & Registrations
+                                </h3>
+                            </div>
+                            <div class="p-4">
+                                <div id="licenses-content" class="space-y-2">
+                                    <p class="text-gray-500">Loading license data...</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="border rounded-lg overflow-hidden">
+                            <div class="bg-gray-50 px-4 py-3 border-b">
+                                <h3 class="text-lg font-semibold text-gray-800">
+                                    <i class="fa-solid fa-certificate mr-2 text-[#7D9A89]"></i>Certifications
+                                </h3>
+                            </div>
+                            <div class="p-4">
+                                <div id="certifications-content" class="space-y-2">
+                                    <p class="text-gray-500">Loading certification data...</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="border rounded-lg overflow-hidden">
+                            <div class="bg-gray-50 px-4 py-3 border-b">
+                                <h3 class="text-lg font-semibold text-gray-800">
+                                    <i class="fa-solid fa-file-alt mr-2 text-[#7D9A89]"></i>Policies & Procedures
+                                </h3>
+                            </div>
+                            <div class="p-4">
+                                <div id="policies-content" class="space-y-2">
+                                    <p class="text-gray-500">Loading policy data...</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Error State -->
+                <div id="compliance-error" class="hidden">
+                    <div class="bg-red-50 border border-red-200 rounded-lg p-6 text-center">
+                        <i class="fa-solid fa-exclamation-triangle text-4xl text-red-500 mb-4"></i>
+                        <h3 class="text-lg font-semibold text-red-800 mb-2">Unable to Load Compliance Data</h3>
+                        <p class="text-red-600 mb-4">Please check your Google Workspace configuration and try again.</p>
+                        <button onclick="refreshComplianceData()" class="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 transition-colors">
+                            <i class="fa-solid fa-redo mr-2"></i>Retry
+                        </button>
+                    </div>
+                </div>
+            </div>
 
             <div class="bg-white p-6 rounded-lg shadow-md mb-8">
                 <h2 class="text-xl font-semibold mb-4 text-gray-800">Regulatory Pillars at a Glance</h2>
@@ -1966,6 +2306,380 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             });
         }, 250);
+    });
+
+    // Compliance Dashboard Functions
+    let complianceData = null;
+    let complianceRefreshInterval = null;
+
+    async function fetchComplianceData() {
+        try {
+            const response = await fetch('/api/getComplianceStatus');
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            const data = await response.json();
+            // Cache data in localStorage
+            localStorage.setItem('complianceData', JSON.stringify(data));
+            localStorage.setItem('complianceDataTimestamp', Date.now().toString());
+            return data;
+        } catch (error) {
+            console.error('Error fetching compliance data:', error);
+            // Try to use cached data
+            const cachedData = localStorage.getItem('complianceData');
+            if (cachedData) {
+                const data = JSON.parse(cachedData);
+                data.isOffline = true;
+                data.message = 'Showing cached data. Unable to connect to Google Workspace.';
+                return data;
+            }
+            // Fall back to static data
+            try {
+                const fallbackResponse = await fetch('/data/fallback-compliance-data.json');
+                const fallbackData = await fallbackResponse.json();
+                return fallbackData;
+            } catch (fallbackError) {
+                console.error('Failed to load fallback data:', fallbackError);
+                throw error;
+            }
+        }
+    }
+
+    async function fetchExpiryData() {
+        try {
+            const response = await fetch('/api/checkDocumentExpiry');
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            const data = await response.json();
+            // Cache expiry data
+            localStorage.setItem('expiryData', JSON.stringify(data));
+            return data;
+        } catch (error) {
+            console.error('Error fetching expiry data:', error);
+            // Try cached data
+            const cachedData = localStorage.getItem('expiryData');
+            if (cachedData) {
+                return JSON.parse(cachedData);
+            }
+            // Return empty data structure
+            return {
+                expiringDocuments: [],
+                summary: { expired: 0, urgent: 0, warning: 0, total: 0 },
+                lastChecked: new Date().toISOString()
+            };
+        }
+    }
+
+    function formatDate(dateString) {
+        if (!dateString) return 'N/A';
+        const date = new Date(dateString);
+        return date.toLocaleDateString('en-US', { 
+            year: 'numeric', 
+            month: 'short', 
+            day: 'numeric' 
+        });
+    }
+
+    function getStatusBadge(item) {
+        const today = new Date();
+        const expDate = item.expirationDate ? new Date(item.expirationDate) : null;
+        
+        if (!expDate) {
+            return '<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">No Expiration</span>';
+        }
+        
+        const daysUntilExpiry = Math.ceil((expDate - today) / (1000 * 60 * 60 * 24));
+        
+        if (daysUntilExpiry < 0) {
+            return '<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">Expired</span>';
+        } else if (daysUntilExpiry <= 30) {
+            return '<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">Expiring Soon</span>';
+        } else {
+            return '<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">Current</span>';
+        }
+    }
+
+    function renderComplianceItems(items, containerId) {
+        const container = document.getElementById(containerId);
+        if (!container) return;
+
+        if (!items || items.length === 0) {
+            container.innerHTML = '<p class="text-gray-500">No items found</p>';
+            return;
+        }
+
+        const html = items.map(item => `
+            <div class="flex items-center justify-between py-2 border-b border-gray-100 last:border-0">
+                <div class="flex-1">
+                    <p class="font-medium text-gray-900">${item.name || 'Unnamed Item'}</p>
+                    <p class="text-sm text-gray-500">Expires: ${formatDate(item.expirationDate)}</p>
+                </div>
+                <div class="ml-4">
+                    ${getStatusBadge(item)}
+                </div>
+            </div>
+        `).join('');
+
+        container.innerHTML = html;
+    }
+
+    async function updateComplianceDisplay() {
+        const loadingEl = document.getElementById('compliance-loading');
+        const metricsEl = document.getElementById('compliance-metrics');
+        const errorEl = document.getElementById('compliance-error');
+
+        try {
+            // Show loading state
+            loadingEl.classList.remove('hidden');
+            metricsEl.classList.add('hidden');
+            errorEl.classList.add('hidden');
+
+            // Fetch data
+            const [complianceData, expiryData] = await Promise.all([
+                fetchComplianceData(),
+                fetchExpiryData()
+            ]);
+
+            // Show offline notice if needed
+            if (complianceData.isOffline) {
+                const offlineNotice = document.createElement('div');
+                offlineNotice.className = 'bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-4';
+                offlineNotice.innerHTML = `
+                    <div class="flex">
+                        <div class="flex-shrink-0">
+                            <i class="fa-solid fa-wifi-slash text-yellow-400"></i>
+                        </div>
+                        <div class="ml-3">
+                            <p class="text-sm text-yellow-700">${complianceData.message || 'Showing offline data'}</p>
+                        </div>
+                    </div>
+                `;
+                metricsEl.insertBefore(offlineNotice, metricsEl.firstChild);
+            }
+
+            // Update metrics
+            document.getElementById('overall-percentage').textContent = 
+                `${complianceData.overall.metrics.percentage}%`;
+            document.getElementById('expired-count').textContent = 
+                complianceData.overall.metrics.expired;
+            document.getElementById('expiring-count').textContent = 
+                complianceData.overall.metrics.expiringSoon;
+            document.getElementById('last-updated').textContent = 
+                new Date().toLocaleTimeString('en-US', { 
+                    hour: '2-digit', 
+                    minute: '2-digit' 
+                });
+
+            // Update expiring documents alert
+            const expiringAlert = document.getElementById('expiring-alert');
+            const expiringList = document.getElementById('expiring-list');
+            
+            if (expiryData.expiringDocuments.length > 0) {
+                expiringAlert.classList.remove('hidden');
+                expiringList.innerHTML = expiryData.expiringDocuments
+                    .slice(0, 5) // Show top 5
+                    .map(doc => `
+                        <li>${doc.name} (${doc.category}) - 
+                            <span class="font-semibold">
+                                ${doc.daysUntilExpiry < 0 ? 'Expired' : `${doc.daysUntilExpiry} days`}
+                            </span>
+                        </li>
+                    `).join('');
+            } else {
+                expiringAlert.classList.add('hidden');
+            }
+
+            // Render items
+            renderComplianceItems(complianceData.licenses.items, 'licenses-content');
+            renderComplianceItems(complianceData.certifications.items, 'certifications-content');
+            renderComplianceItems(complianceData.policies.items, 'policies-content');
+
+            // Show metrics
+            loadingEl.classList.add('hidden');
+            metricsEl.classList.remove('hidden');
+
+        } catch (error) {
+            console.error('Failed to update compliance display:', error);
+            loadingEl.classList.add('hidden');
+            errorEl.classList.remove('hidden');
+        }
+    }
+
+    function refreshComplianceData() {
+        updateComplianceDisplay();
+    }
+
+    // Export compliance data function
+    async function exportComplianceData(format = 'csv') {
+        try {
+            // Show loading state on export buttons
+            const exportButtons = document.querySelectorAll('button[onclick^="exportComplianceData"]');
+            exportButtons.forEach(btn => {
+                btn.disabled = true;
+                btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i>Exporting...';
+            });
+            
+            // Fetch export data
+            const response = await fetch(`/api/exportComplianceData?format=${format}`);
+            
+            if (!response.ok) {
+                throw new Error('Export failed');
+            }
+            
+            // Get filename from Content-Disposition header or create default
+            const contentDisposition = response.headers.get('Content-Disposition');
+            let filename = `compliance_export_${new Date().toISOString().split('T')[0]}.${format}`;
+            
+            if (contentDisposition) {
+                const filenameMatch = contentDisposition.match(/filename="(.+)"/);
+                if (filenameMatch) {
+                    filename = filenameMatch[1];
+                }
+            }
+            
+            // Create blob and download
+            const blob = await response.blob();
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.style.display = 'none';
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);
+            document.body.removeChild(a);
+            
+            // Show success message
+            showExportSuccess(format);
+            
+        } catch (error) {
+            console.error('Export failed:', error);
+            showExportError();
+        } finally {
+            // Reset export buttons
+            const csvButton = document.querySelector('button[onclick="exportComplianceData(\'csv\')"]');
+            const jsonButton = document.querySelector('button[onclick="exportComplianceData(\'json\')"]');
+            
+            if (csvButton) {
+                csvButton.disabled = false;
+                csvButton.innerHTML = '<i class="fa-solid fa-download mr-2"></i>Export CSV';
+            }
+            if (jsonButton) {
+                jsonButton.disabled = false;
+                jsonButton.innerHTML = '<i class="fa-solid fa-code mr-2"></i>Export JSON';
+            }
+        }
+    }
+    
+    function showExportSuccess(format) {
+        const message = document.createElement('div');
+        message.className = 'fixed bottom-4 right-4 bg-green-600 text-white px-6 py-3 rounded-lg shadow-lg flex items-center';
+        message.innerHTML = `
+            <i class="fa-solid fa-check-circle mr-2"></i>
+            <span>Compliance data exported as ${format.toUpperCase()}</span>
+        `;
+        document.body.appendChild(message);
+        
+        setTimeout(() => {
+            message.remove();
+        }, 3000);
+    }
+    
+    function showExportError() {
+        const message = document.createElement('div');
+        message.className = 'fixed bottom-4 right-4 bg-red-600 text-white px-6 py-3 rounded-lg shadow-lg flex items-center';
+        message.innerHTML = `
+            <i class="fa-solid fa-exclamation-circle mr-2"></i>
+            <span>Export failed. Please try again.</span>
+        `;
+        document.body.appendChild(message);
+        
+        setTimeout(() => {
+            message.remove();
+        }, 3000);
+    }
+
+    // Dashboard widget update function
+    async function updateDashboardWidget() {
+        const widgetLoading = document.getElementById('widget-loading');
+        const widgetContent = document.getElementById('widget-content');
+        const widgetError = document.getElementById('widget-error');
+        
+        if (!widgetLoading) return; // Widget not present
+        
+        try {
+            widgetLoading.classList.remove('hidden');
+            widgetContent.classList.add('hidden');
+            widgetError.classList.add('hidden');
+            
+            // Try to use cached data first for faster loading
+            const cachedData = localStorage.getItem('complianceData');
+            if (cachedData) {
+                const data = JSON.parse(cachedData);
+                updateWidgetDisplay(data);
+                widgetLoading.classList.add('hidden');
+                widgetContent.classList.remove('hidden');
+            }
+            
+            // Fetch fresh data
+            const complianceData = await fetchComplianceData();
+            updateWidgetDisplay(complianceData);
+            
+            widgetLoading.classList.add('hidden');
+            widgetContent.classList.remove('hidden');
+            
+        } catch (error) {
+            console.error('Failed to update widget:', error);
+            widgetLoading.classList.add('hidden');
+            widgetError.classList.remove('hidden');
+        }
+    }
+    
+    function updateWidgetDisplay(data) {
+        document.getElementById('widget-percentage').textContent = 
+            `${data.overall.metrics.percentage}%`;
+        document.getElementById('widget-expired').textContent = 
+            data.overall.metrics.expired;
+        document.getElementById('widget-expiring').textContent = 
+            data.overall.metrics.expiringSoon;
+        document.getElementById('widget-current').textContent = 
+            data.overall.metrics.current;
+        
+        // Show alert if there are critical items
+        const widgetAlert = document.getElementById('widget-alert');
+        const widgetAlertText = document.getElementById('widget-alert-text');
+        
+        if (data.overall.metrics.expired > 0) {
+            widgetAlert.classList.remove('hidden');
+            widgetAlertText.textContent = `${data.overall.metrics.expired} document(s) have expired.`;
+        } else if (data.overall.metrics.expiringSoon > 0) {
+            widgetAlert.classList.remove('hidden');
+            widgetAlertText.textContent = `${data.overall.metrics.expiringSoon} document(s) expiring soon.`;
+        } else {
+            widgetAlert.classList.add('hidden');
+        }
+    }
+
+    // Initialize compliance dashboard when page loads
+    if (document.getElementById('compliance-dashboard')) {
+        // Initial load
+        updateComplianceDisplay();
+        
+        // Set up auto-refresh every 5 minutes
+        complianceRefreshInterval = setInterval(updateComplianceDisplay, 5 * 60 * 1000);
+    }
+    
+    // Initialize dashboard widget
+    if (document.getElementById('dashboard-compliance-widget')) {
+        updateDashboardWidget();
+    }
+
+    // Clean up interval when navigating away
+    window.addEventListener('beforeunload', () => {
+        if (complianceRefreshInterval) {
+            clearInterval(complianceRefreshInterval);
+        }
     });
 });
 </script>

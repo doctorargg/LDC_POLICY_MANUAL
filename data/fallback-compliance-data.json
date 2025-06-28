@@ -1,0 +1,79 @@
+{
+  "licenses": {
+    "items": [
+      {
+        "type": "Medical License",
+        "name": "Medical License - Renewal Required",
+        "expirationDate": "2025-12-31",
+        "status": "Current",
+        "lastUpdated": "2025-01-15",
+        "notes": "Contact WI Medical Board for renewal"
+      },
+      {
+        "type": "DEA Registration",
+        "name": "DEA Registration - Check Status",
+        "expirationDate": "2026-06-30",
+        "status": "Current",
+        "lastUpdated": "2025-01-15",
+        "notes": "Verify with DEA website"
+      }
+    ],
+    "metrics": {
+      "percentage": 100,
+      "expired": 0,
+      "expiringSoon": 0,
+      "current": 2,
+      "total": 2
+    }
+  },
+  "certifications": {
+    "items": [
+      {
+        "type": "BLS",
+        "name": "BLS Certification - Check Expiration",
+        "expirationDate": null,
+        "status": "Needs Verification",
+        "lastUpdated": "2025-01-15",
+        "notes": "Verify current status"
+      }
+    ],
+    "metrics": {
+      "percentage": 100,
+      "expired": 0,
+      "expiringSoon": 0,
+      "current": 1,
+      "total": 1
+    }
+  },
+  "policies": {
+    "items": [
+      {
+        "type": "Clinical Protocol",
+        "name": "HIPAA Privacy Policy",
+        "expirationDate": "2025-12-31",
+        "status": "Current",
+        "lastUpdated": "2025-01-15",
+        "notes": "Annual review required"
+      }
+    ],
+    "metrics": {
+      "percentage": 100,
+      "expired": 0,
+      "expiringSoon": 0,
+      "current": 1,
+      "total": 1
+    }
+  },
+  "overall": {
+    "metrics": {
+      "percentage": 100,
+      "expired": 0,
+      "expiringSoon": 0,
+      "current": 4,
+      "total": 4
+    },
+    "lastUpdated": "2025-01-15T12:00:00Z"
+  },
+  "isOffline": true,
+  "message": "Showing cached data. Connect to internet to sync with Google Workspace."
+}

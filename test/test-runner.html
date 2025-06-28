@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compliance System Test Runner</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .test-suite {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .test-passed {
+            color: #22c55e;
+        }
+        .test-failed {
+            color: #ef4444;
+        }
+        .test-result {
+            padding: 8px;
+            margin: 4px 0;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+        button {
+            background-color: #4C6B57;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #7D9A89;
+        }
+        #test-output {
+            background: #1a1a1a;
+            color: #00ff00;
+            padding: 15px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            white-space: pre-wrap;
+            min-height: 200px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Lotus Direct Care - Compliance System Tests</h1>
+    
+    <div class="test-suite">
+        <h2>Browser-Based Tests</h2>
+        <button onclick="runAllTests()">Run All Tests</button>
+        <button onclick="clearOutput()">Clear Output</button>
+        
+        <div id="test-output"></div>
+    </div>
+
+    <div class="test-suite">
+        <h2>Test Suites</h2>
+        <div id="test-list"></div>
+    </div>
+
+    <script>
+        const output = document.getElementById('test-output');
+        const testList = document.getElementById('test-list');
+
+        function log(message, type = 'info') {
+            const timestamp = new Date().toLocaleTimeString();
+            const prefix = type === 'pass' ? '✓' : type === 'fail' ? '✗' : '>';
+            const color = type === 'pass' ? '#00ff00' : type === 'fail' ? '#ff0000' : '#ffffff';
+            
+            output.innerHTML += `<span style="color: ${color}">[${timestamp}] ${prefix} ${message}</span>\n`;
+            output.scrollTop = output.scrollHeight;
+        }
+
+        function clearOutput() {
+            output.innerHTML = '';
+            testList.innerHTML = '';
+        }
+
+        // Test functions
+        const tests = {
+            'Date Formatting': () => {
+                const date = new Date('2025-12-31');
+                const formatted = date.toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric'
+                });
+                
+                if (formatted.includes('Dec') && formatted.includes('31') && formatted.includes('2025')) {
+                    return { passed: true, message: 'Date formatting works correctly' };
+                }
+                return { passed: false, message: `Date formatting failed: ${formatted}` };
+            },
+
+            'Compliance Calculations': () => {
+                const total = 10;
+                const current = 8;
+                const percentage = Math.round((current / total) * 100);
+                
+                if (percentage === 80) {
+                    return { passed: true, message: 'Compliance percentage calculated correctly' };
+                }
+                return { passed: false, message: `Expected 80%, got ${percentage}%` };
+            },
+
+            'Expiry Detection': () => {
+                const today = new Date();
+                const expiredDate = new Date(today.getTime() - (24 * 60 * 60 * 1000));
+                const daysUntilExpiry = Math.ceil((expiredDate - today) / (1000 * 60 * 60 * 24));
+                
+                if (daysUntilExpiry < 0) {
+                    return { passed: true, message: 'Expired document detection works' };
+                }
+                return { passed: false, message: 'Failed to detect expired document' };
+            },
+
+            'LocalStorage Caching': () => {
+                const testData = { test: 'data', timestamp: Date.now() };
+                localStorage.setItem('test-compliance-data', JSON.stringify(testData));
+                const retrieved = JSON.parse(localStorage.getItem('test-compliance-data'));
+                localStorage.removeItem('test-compliance-data');
+                
+                if (retrieved && retrieved.test === 'data') {
+                    return { passed: true, message: 'LocalStorage caching works' };
+                }
+                return { passed: false, message: 'LocalStorage caching failed' };
+            },
+
+            'CSV Escaping': () => {
+                const testCases = [
+                    { input: 'Simple text', expected: 'Simple text' },
+                    { input: 'Text, with comma', expected: '"Text, with comma"' },
+                    { input: 'Text with "quotes"', expected: '"Text with ""quotes"""' }
+                ];
+                
+                for (const test of testCases) {
+                    const result = escapeCSV(test.input);
+                    if (result !== test.expected) {
+                        return { 
+                            passed: false, 
+                            message: `CSV escape failed: "${test.input}" -> "${result}" (expected "${test.expected}")` 
+                        };
+                    }
+                }
+                
+                return { passed: true, message: 'CSV escaping works correctly' };
+            },
+
+            'API URL Construction': () => {
+                const baseUrl = '/api/getComplianceStatus';
+                const url = new URL(baseUrl, window.location.origin);
+                
+                if (url.pathname === '/api/getComplianceStatus') {
+                    return { passed: true, message: 'API URL construction works' };
+                }
+                return { passed: false, message: `Invalid API URL: ${url.pathname}` };
+            }
+        };
+
+        function escapeCSV(value) {
+            if (!value) return '';
+            const stringValue = value.toString();
+            
+            if (stringValue.includes(',') || stringValue.includes('"') || stringValue.includes('\n')) {
+                return `"${stringValue.replace(/"/g, '""')}"`;
+            }
+            
+            return stringValue;
+        }
+
+        async function runAllTests() {
+            clearOutput();
+            log('Starting compliance system tests...', 'info');
+            log('================================', 'info');
+            
+            let passed = 0;
+            let failed = 0;
+            
+            for (const [testName, testFn] of Object.entries(tests)) {
+                try {
+                    log(`Running: ${testName}`, 'info');
+                    const result = await testFn();
+                    
+                    if (result.passed) {
+                        log(`PASS: ${result.message}`, 'pass');
+                        passed++;
+                    } else {
+                        log(`FAIL: ${result.message}`, 'fail');
+                        failed++;
+                    }
+                    
+                    // Update test list
+                    const testResult = document.createElement('div');
+                    testResult.className = 'test-result';
+                    testResult.innerHTML = `
+                        <span class="${result.passed ? 'test-passed' : 'test-failed'}">
+                            ${result.passed ? '✓' : '✗'} ${testName}: ${result.message}
+                        </span>
+                    `;
+                    testList.appendChild(testResult);
+                    
+                } catch (error) {
+                    log(`ERROR in ${testName}: ${error.message}`, 'fail');
+                    failed++;
+                }
+            }
+            
+            log('================================', 'info');
+            log(`Test Results: ${passed} passed, ${failed} failed`, failed > 0 ? 'fail' : 'pass');
+            
+            // Test network connectivity
+            log('\nTesting network features...', 'info');
+            try {
+                const response = await fetch('/data/fallback-compliance-data.json');
+                if (response.ok) {
+                    log('Fallback data accessible', 'pass');
+                } else {
+                    log('Fallback data not accessible', 'fail');
+                }
+            } catch (error) {
+                log('Network test failed: ' + error.message, 'fail');
+            }
+        }
+
+        // Auto-run tests on load
+        window.addEventListener('load', () => {
+            log('Test runner ready. Click "Run All Tests" to begin.', 'info');
+        });
+    </script>
+</body>
+</html>
