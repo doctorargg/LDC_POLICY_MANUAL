@@ -1,0 +1,1973 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lotus Direct Care - Interactive Policy Manual</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-green: #4C6B57;
+            --secondary-green: #7D9A89;
+            --accent-green: #A8C4A2;
+            --light-green: #EFEBE6;
+            --cream: #F8F7F4;
+            --dark-gray: #2D3748;
+            --medium-gray: #4A5568;
+            --light-gray: #718096;
+        }
+        
+        * {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #F8F7F4 0%, #EFEBE6 100%);
+            color: var(--medium-gray);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+        }
+        
+        /* Enhanced Navigation */
+        .nav-link {
+            position: relative;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border-bottom: 2px solid transparent;
+            overflow: hidden;
+        }
+        
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(76, 107, 87, 0.1), transparent);
+            transition: left 0.5s;
+        }
+        
+        .nav-link:hover::before {
+            left: 100%;
+        }
+        
+        .nav-link.active, .nav-link:hover {
+            color: var(--primary-green);
+            border-bottom-color: var(--primary-green);
+            transform: translateY(-1px);
+        }
+        
+        /* Page Content Animations */
+        .page-content {
+            display: none;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.4s ease-out;
+        }
+        
+        .page-content.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Enhanced Cards */
+        .card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-green), var(--secondary-green), var(--accent-green));
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(76, 107, 87, 0.15);
+        }
+        
+        .card:hover::before {
+            transform: scaleX(1);
+        }
+        
+        /* Enhanced Accordions */
+        .accordion-header {
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            background: linear-gradient(135deg, #ffffff 0%, #f9f9f9 100%);
+        }
+        
+        .accordion-header:hover {
+            background: linear-gradient(135deg, var(--light-green) 0%, #e8e4df 100%);
+            transform: translateX(5px);
+        }
+        
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .accordion-icon {
+            transition: transform 0.3s ease;
+        }
+        
+        .accordion-header.active .accordion-icon {
+            transform: rotate(180deg);
+        }
+        
+        /* Enhanced Tabs */
+        .tab-button {
+            position: relative;
+            transition: all 0.3s ease;
+            border-bottom: 2px solid transparent;
+        }
+        
+        .tab-button::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: var(--primary-green);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+        
+        .tab-button:hover::after {
+            width: 100%;
+        }
+        
+        .tab-button.active {
+            border-color: var(--primary-green);
+            background: linear-gradient(135deg, var(--light-green) 0%, #e8e4df 100%);
+            color: var(--dark-gray);
+        }
+        
+        .tab-button.active::after {
+            width: 100%;
+        }
+        
+        /* Chart Container */
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            height: 400px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Enhanced Callouts */
+        .callout {
+            background: linear-gradient(135deg, var(--light-green) 0%, #e8e4df 100%);
+            border-left: 4px solid var(--secondary-green);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .callout::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(180deg, var(--primary-green), var(--secondary-green), var(--accent-green));
+        }
+        
+        /* Process Steps */
+        .process-step {
+            border-left: 3px solid var(--secondary-green);
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .process-step:hover {
+            border-left-color: var(--primary-green);
+            transform: translateX(5px);
+        }
+        
+        .process-step:last-child {
+            border-left: 3px solid transparent;
+        }
+        
+        .process-circle {
+            background: linear-gradient(135deg, var(--secondary-green) 0%, var(--primary-green) 100%);
+            color: white;
+            width: 2.5rem;
+            height: 2.5rem;
+            box-shadow: 0 4px 12px rgba(76, 107, 87, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .process-step:hover .process-circle {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(76, 107, 87, 0.4);
+        }
+        
+        /* Emergency Contact Cards */
+        .emergency-card {
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .emergency-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.6s;
+        }
+        
+        .emergency-card:hover::before {
+            left: 100%;
+        }
+        
+        .emergency-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        /* Quick Links */
+        .quick-link {
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .quick-link:hover {
+            transform: translateX(5px);
+        }
+        
+        /* Mobile Menu Animation */
+        .mobile-menu-enter {
+            animation: slideDown 0.3s ease-out;
+        }
+        
+        .mobile-menu-exit {
+            animation: slideUp 0.3s ease-in;
+        }
+        
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes slideUp {
+            from {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            to {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+        }
+        
+        /* Loading Animation */
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(76, 107, 87, 0.3);
+            border-radius: 50%;
+            border-top-color: var(--primary-green);
+            animation: spin 1s ease-in-out infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Responsive Enhancements */
+        @media (max-width: 768px) {
+            .card {
+                margin-bottom: 1rem;
+            }
+            
+            .process-step {
+                padding-left: 1rem;
+            }
+            
+            .chart-container {
+                height: 300px;
+                padding: 15px;
+            }
+        }
+        
+        /* Focus States for Accessibility */
+        .nav-link:focus,
+        .tab-button:focus,
+        .accordion-header:focus,
+        .quick-link:focus {
+            outline: 2px solid var(--primary-green);
+            outline-offset: 2px;
+        }
+        
+        /* Print Styles */
+        @media print {
+            .nav-link::before,
+            .card::before,
+            .callout::before {
+                display: none;
+            }
+            
+            .page-content {
+                display: block !important;
+                opacity: 1 !important;
+                transform: none !important;
+            }
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <header class="bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-50">
+        <nav class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center">
+                    <div class="h-10 w-10 mr-3 flex items-center justify-center">
+                        <img src="Logosmallcropped.png" alt="Lotus Direct Care" class="h-8 w-8 object-contain">
+                    </div>
+                    <div>
+                        <span class="text-xl font-bold text-[#4C6B57]">Lotus Direct Care</span>
+                        <span class="ml-2 text-sm text-gray-500 hidden md:inline">Policy Manual</span>
+                    </div>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="#" class="nav-link px-3 py-2 rounded-md text-sm font-medium" data-target="dashboard">Dashboard</a>
+                        <a href="#" class="nav-link px-3 py-2 rounded-md text-sm font-medium" data-target="patient-journey">Patient Journey</a>
+                        <a href="#" class="nav-link px-3 py-2 rounded-md text-sm font-medium" data-target="clinical-ops">Clinical Operations</a>
+                        <a href="#" class="nav-link px-3 py-2 rounded-md text-sm font-medium" data-target="ketamine-protocols">Ketamine Protocols</a>
+                        <a href="#" class="nav-link px-3 py-2 rounded-md text-sm font-medium" data-target="controlled-substance-logging">Controlled Substances</a>
+                        <a href="#" class="nav-link px-3 py-2 rounded-md text-sm font-medium" data-target="practice-safety">Practice & Safety</a>
+                        <a href="#" class="nav-link px-3 py-2 rounded-md text-sm font-medium" data-target="compliance-center">Compliance Center</a>
+                    </div>
+                </div>
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </nav>
+        <div id="mobile-menu" class="md:hidden hidden">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#" class="nav-link block px-3 py-2 rounded-md text-base font-medium" data-target="dashboard">Dashboard</a>
+                <a href="#" class="nav-link block px-3 py-2 rounded-md text-base font-medium" data-target="patient-journey">Patient Journey</a>
+                <a href="#" class="nav-link block px-3 py-2 rounded-md text-base font-medium" data-target="clinical-ops">Clinical Operations</a>
+                <a href="#" class="nav-link block px-3 py-2 rounded-md text-base font-medium" data-target="ketamine-protocols">Ketamine Protocols</a>
+                <a href="#" class="nav-link block px-3 py-2 rounded-md text-base font-medium" data-target="controlled-substance-logging">Controlled Substances</a>
+                <a href="#" class="nav-link block px-3 py-2 rounded-md text-base font-medium" data-target="practice-safety">Practice & Safety</a>
+                <a href="#" class="nav-link block px-3 py-2 rounded-md text-base font-medium" data-target="compliance-center">Compliance Center</a>
+            </div>
+        </div>
+    </header>
+
+    <main id="main-content" class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        
+        <section id="dashboard" class="page-content">
+             <h1 class="text-3xl font-bold text-[#4C6B57] mb-4">Welcome to Your Operations Dashboard</h1>
+             <p class="text-lg text-gray-600 mb-8">This interactive manual provides quick access to the policies and procedures essential for Lotus Direct Care. Use the navigation above or the quick links below to find the information you need to ensure compliance and deliver exceptional patient care.</p>
+             
+             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                 
+                 <div class="card bg-white p-6 rounded-lg shadow-md col-span-1 md:col-span-2 lg:col-span-3">
+                    <h2 class="text-xl font-semibold mb-3 text-[#4C6B57]">Emergency Contacts & Procedures</h2>
+                    <p class="text-gray-600 mb-4">Immediate access to critical contact information for emergencies.</p>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 text-sm">
+                        <div class="emergency-card bg-red-50 p-4 rounded-lg">
+                            <h3 class="font-bold text-red-800"><i class="fa-solid fa-triangle-exclamation mr-2"></i>Medical/Fire/Police</h3>
+                            <p class="text-2xl font-bold text-red-700">Call 911</p>
+                        </div>
+                        <div class="emergency-card bg-blue-50 p-4 rounded-lg">
+                            <h3 class="font-bold text-blue-800"><i class="fa-solid fa-house-medical mr-2"></i>Ozaukee Public Health</h3>
+                            <p class="text-gray-700">(262) 284-8170</p>
+                        </div>
+                        <div class="emergency-card bg-yellow-50 p-4 rounded-lg">
+                            <h3 class="font-bold text-yellow-800"><i class="fa-solid fa-flask-vial mr-2"></i>Poison Control</h3>
+                            <p class="text-gray-700">1-800-222-1222</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-semibold mb-3 text-[#4C6B57]">Key Compliance Areas</h2>
+                    <p class="text-gray-600 mb-4">A high-level overview of our primary regulatory obligations.</p>
+                    <ul class="space-y-2 text-gray-700">
+                        <li><i class="fa-solid fa-shield-halved text-[#7D9A89] mr-2"></i>HIPAA (Patient Privacy)</li>
+                        <li><i class="fa-solid fa-hard-hat text-[#7D9A89] mr-2"></i>OSHA (Workplace Safety)</li>
+                        <li><i class="fa-solid fa-microscope text-[#7D9A89] mr-2"></i>CLIA (Lab Testing)</li>
+                        <li><i class="fa-solid fa-gavel text-[#7D9A89] mr-2"></i>Wisconsin State Law</li>
+                    </ul>
+                </div>
+
+                <div class="card bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-semibold mb-3 text-[#4C6B57]">Specialized Care Quick Links</h2>
+                    <p class="text-gray-600 mb-4">Go directly to protocols for our unique services.</p>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="quick-link text-blue-600 hover:underline" data-target="ketamine-protocols">Ketamine Protocols</a></li>
+                        <li><a href="#" class="quick-link text-blue-600 hover:underline" data-target="clinical-ops" data-subtarget="functional-medicine-tab">Functional Medicine Protocols</a></li>
+                        <li><a href="#" class="quick-link text-blue-600 hover:underline" data-target="clinical-ops" data-subtarget="mental-health-tab">Mental Health Protocols</a></li>
+                        <li><a href="#" class="quick-link text-blue-600 hover:underline" data-target="clinical-ops" data-subtarget="addiction-treatment-tab">Addiction Treatment Protocols</a></li>
+                    </ul>
+                </div>
+
+                <div class="card bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-semibold mb-3 text-[#4C6B57]">DPC Agreement Compliance</h2>
+                    <p class="text-gray-600 mb-4">Review the mandatory requirements for patient membership agreements under Wisconsin law.</p>
+                    <a href="#" class="quick-link inline-block bg-[#7D9A89] text-white px-4 py-2 rounded-md hover:bg-[#4C6B57] transition-colors" data-target="patient-journey" data-subtarget="dpc-agreement-accordion">View WI DPC Checklist</a>
+                </div>
+
+             </div>
+        </section>
+
+        <section id="patient-journey" class="page-content">
+            <h1 class="text-3xl font-bold text-[#4C6B57] mb-4">The Patient Journey</h1>
+            <p class="text-lg text-gray-600 mb-8">This section provides a complete guide to the patient journey at Lotus Direct Care, from their first contact with the practice to ongoing communication. It consolidates all policies and procedures necessary to ensure a welcoming, efficient, and compliant patient experience.</p>
+
+            <div class="space-y-4">
+                <div class="bg-white rounded-lg shadow-sm">
+                    <div class="accordion-header p-5 flex justify-between items-center border-b">
+                        <h2 class="text-xl font-semibold text-gray-800"><i class="fa-solid fa-user-plus mr-3 text-[#7D9A89]"></i>New Patient Onboarding</h2>
+                        <i class="fa-solid fa-chevron-down accordion-icon"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="p-5 text-gray-700 space-y-4">
+                           <p>The new patient intake process is designed to be welcoming, efficient, and thorough, establishing a strong foundation for the therapeutic relationship.</p>
+                           <div class="relative pl-8 process-step">
+                                <div class="absolute -left-4 top-0 flex items-center justify-center process-circle">1</div>
+                                <h4 class="font-semibold text-gray-800">Initial Inquiry & Pre-registration</h4>
+                                <p>Provide info on the DPC model. Collect demographics, medical history, and insurance details (for wraparound coverage) via phone or secure portal.</p>
+                           </div>
+                           <div class="relative pl-8 process-step">
+                                <div class="absolute -left-4 top-0 flex items-center justify-center process-circle">2</div>
+                                <h4 class="font-semibold text-gray-800">Scheduling & Welcome</h4>
+                                <p>Schedule a 60-90 minute new patient appointment. Provide welcome materials including the Membership Agreement and Notice of Privacy Practices.</p>
+                           </div>
+                            <div class="relative pl-8 process-step">
+                                <div class="absolute -left-4 top-0 flex items-center justify-center process-circle">3</div>
+                                <h4 class="font-semibold text-gray-800">Membership Enrollment & Consent</h4>
+                                <p>Explain membership benefits and fee structures. Review and sign the WI-compliant Membership Agreement and all necessary consent forms.</p>
+                           </div>
+                           <div class="relative pl-8 process-step">
+                                <div class="absolute -left-4 top-0 flex items-center justify-center process-circle">4</div>
+                                <h4 class="font-semibold text-gray-800">Portal Setup</h4>
+                                <p>Assist the patient in setting up their secure patient portal account and train them on its use for communication and accessing records.</p>
+                           </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-sm">
+                    <div id="dpc-agreement-accordion" class="accordion-header p-5 flex justify-between items-center border-b">
+                        <h2 class="text-xl font-semibold text-gray-800"><i class="fa-solid fa-file-signature mr-3 text-[#7D9A89]"></i>WI DPC Membership Agreement Checklist</h2>
+                        <i class="fa-solid fa-chevron-down accordion-icon"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="p-5 text-gray-700">
+                           <p class="mb-4">Per Wisconsin law, all Direct Primary Care agreements must meet the following criteria to be valid. This checklist ensures our patient membership agreement is compliant.</p>
+                           <ul class="space-y-3">
+                               <li class="flex items-start"><i class="fa-solid fa-check-square text-green-600 mt-1 mr-3"></i><span><strong>In Writing & Signed:</strong> The agreement must be written and signed by both the practice and the patient (or their legal representative).</span></li>
+                               <li class="flex items-start"><i class="fa-solid fa-check-square text-green-600 mt-1 mr-3"></i><span><strong>Termination Clause:</strong> Must allow either party to terminate with written notice, and provider termination must follow specific state rules (e.g., cannot be based solely on health status).</span></li>
+                               <li class="flex items-start"><i class="fa-solid fa-check-square text-green-600 mt-1 mr-3"></i><span><strong>Services Described:</strong> Must describe and quantify the specific primary care services covered by the fee.</span></li>
+                               <li class="flex items-start"><i class="fa-solid fa-check-square text-green-600 mt-1 mr-3"></i><span><strong>Fees & Duration Specified:</strong> Must clearly state the subscription fee, payment terms, and agreement duration.</span></li>
+                               <li class="flex items-start"><i class="fa-solid fa-check-square text-green-600 mt-1 mr-3"></i><span><strong>No Third-Party Billing:</strong> Must prohibit billing an insurer for services covered by the fee.</span></li>
+                               <li class="flex items-start"><i class="fa-solid fa-check-square text-green-600 mt-1 mr-3"></i><span><strong>Required Disclosures:</strong> Must prominently state in writing:</span>
+                                   <ul class="list-disc list-inside mt-2 ml-4 text-sm space-y-1">
+                                       <li>The agreement is <strong>NOT</strong> health insurance.</li>
+                                       <li>It may not satisfy federal coverage requirements on its own.</li>
+                                       <li>The patient is responsible for non-covered service fees.</li>
+                                       <li>Patient is encouraged to consult an insurance advisor.</li>
+                                       <li>Fees might not apply to insurance deductibles or out-of-pocket maximums.</li>
+                                   </ul>
+                               </li>
+                           </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                 <div class="bg-white rounded-lg shadow-sm">
+                    <div class="accordion-header p-5 flex justify-between items-center border-b">
+                        <h2 class="text-xl font-semibold text-gray-800"><i class="fa-solid fa-calendar-check mr-3 text-[#7D9A89]"></i>Scheduling & Appointment Management</h2>
+                        <i class="fa-solid fa-chevron-down accordion-icon"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="p-5 text-gray-700 space-y-4">
+                            <p>Our scheduling system prioritizes patient access and convenience, offering same-day/next-day appointments for urgent needs and extended appointment times.</p>
+                            <ul class="list-disc list-inside space-y-2">
+                                <li><strong>Appointment Types:</strong> Clearly defined time allocations (e.g., New Patient: 60-90 min, Follow-up: 30 min, Urgent: 20 min).</li>
+                                <li><strong>Same-Day Access:</strong> Reserved slots in the schedule daily to accommodate urgent issues. Triage protocols determine medical urgency.</li>
+                                <li><strong>Cancellations:</strong> Require 24-hour notice to avoid potential fees. Policy is communicated clearly to all patients.</li>
+                                <li><strong>Confirmations:</strong> Automated reminders sent 24-48 hours prior via patient's preferred method (text, email, portal).</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-sm">
+                    <div class="accordion-header p-5 flex justify-between items-center border-b">
+                        <h2 class="text-xl font-semibold text-gray-800"><i class="fa-solid fa-comments mr-3 text-[#7D9A89]"></i>Communication Systems</h2>
+                        <i class="fa-solid fa-chevron-down accordion-icon"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="p-5 text-gray-700 space-y-4">
+                            <p>Effective and secure communication is a cornerstone of our DPC model. All communications must be professional, timely, and protect patient privacy.</p>
+                             <div class="callout p-4 rounded-md">
+                                <h4 class="font-semibold text-gray-800">Secure Messaging Protocol</h4>
+                                <ul class="list-disc list-inside text-sm space-y-1 mt-2">
+                                   <li><strong>Primary Channel:</strong> The patient portal is the primary method for secure clinical communication.</li>
+                                   <li><strong>Response Time:</strong> Urgent messages responded to within 4 business hours; routine messages within 24 business hours. This expectation is set with patients during onboarding.</li>
+                                   <li><strong>Appropriate Use:</strong> Not for emergencies. Complex issues require a telehealth or in-person visit.</li>
+                                   <li><strong>Documentation:</strong> All clinically significant messages are documented in the patient's EHR.</li>
+                                </ul>
+                            </div>
+                            <div class="callout p-4 rounded-md">
+                                <h4 class="font-semibold text-gray-800">Telephone & Other Channels</h4>
+                                <ul class="list-disc list-inside text-sm space-y-1 mt-2">
+                                    <li><strong>After-Hours:</strong> Urgent calls are routed to the on-call provider. The outgoing message clearly directs patients to call 911 for true emergencies.</li>
+                                    <li><strong>Email/Text:</strong> Standard email/text is for non-clinical communication only (e.g., appointment reminders). Any PHI must be sent via encrypted email or the secure portal.</li>
+                                    <li><strong>Multilingual Support:</strong> Direct communication in Spanish is available. Professional interpreter services are used for other languages to ensure clear understanding, especially for informed consent.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <section id="clinical-ops" class="page-content">
+            <h1 class="text-3xl font-bold text-[#4C6B57] mb-4">Clinical Operations & Workflows</h1>
+            <p class="text-lg text-gray-600 mb-8">This section details the protocols for delivering high-quality, evidence-based patient care, including standards for documentation and procedures for our specialized services. These workflows are designed to leverage the strengths of the DPC model for comprehensive health management.</p>
+            
+            <div class="mb-6">
+                <div class="border-b border-gray-200">
+                    <nav class="-mb-px flex space-x-6" aria-label="Tabs">
+                        <button class="tab-button whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm" data-tab="patient-care-tab">Patient Care Protocols</button>
+                        <button class="tab-button whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm" data-tab="documentation-tab">Clinical Documentation</button>
+                        <button class="tab-button whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm" data-tab="specialized-services-tab">Specialized Services</button>
+                    </nav>
+                </div>
+            </div>
+
+            <div id="patient-care-tab-content" class="tab-content">
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                    <h2 class="text-2xl font-semibold text-gray-800 mb-4">Patient Care Protocols</h2>
+                    <div class="space-y-4">
+                        <div>
+                            <h3 class="font-semibold text-lg text-gray-700">Clinical Assessment & Evaluation</h3>
+                            <p>Every assessment is comprehensive, utilizing active listening and the extended time afforded by the DPC model to perform thorough histories and physical exams.</p>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-lg text-gray-700">Chronic Disease Management</h3>
+                            <p>Leverage the DPC model for proactive, coordinated care. Protocols focus on patient education, self-management support, lifestyle modification, and regular follow-up to optimize outcomes for conditions like diabetes, hypertension, and mental health.</p>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-lg text-gray-700">Controlled Substance Management (Wisconsin Specific)</h3>
+                             <div class="callout p-4 rounded-md mt-2">
+                                <ul class="list-disc list-inside text-sm space-y-2">
+                                    <li><strong>ePDMP Checks Required:</strong> A check of the Wisconsin electronic Prescription Drug Monitoring Program (ePDMP) is mandatory <strong>before</strong> issuing a prescription for any monitored drug (Schedules II-V).</li>
+                                    <li><strong>Chronic Pain:</strong> Prioritize non-opioid therapies. If opioids are necessary, aim for <50 MME/day and document justification clearly for exceeding this threshold.</li>
+                                    <li><strong>Telehealth Prescribing:</strong> Requires at least one in-person evaluation within the past 12 months for controlled substances.</li>
+                                </ul>
+                            </div>
+                        </div>
+                         <div>
+                            <h3 class="font-semibold text-lg text-gray-700">Physician Dispensing (Wisconsin Specific)</h3>
+                            <p>Physicians in Wisconsin may dispense medications from the office. If this service is offered, Lotus Direct Care must adhere to all regulations, including:</p>
+                             <ul class="list-disc list-inside text-sm space-y-2 mt-2">
+                                 <li><strong>Proper Labeling:</strong> Must include practice name/address, date, patient name, drug name/strength, directions, and cautionary statements.</li>
+                                 <li><strong>Record-Keeping:</strong> Meticulous records of all dispensed medications must be kept.</li>
+                                 <li><strong>ePDMP Reporting:</strong> All dispensed controlled substances must be reported to the ePDMP by 11:59 p.m. the next business day.</li>
+                                 <li><strong>Secure Storage:</strong> Medications, especially controlled substances, must be stored securely according to DEA regulations.</li>
+                             </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="documentation-tab-content" class="tab-content hidden">
+                 <div class="bg-white p-6 rounded-lg shadow-sm">
+                    <h2 class="text-2xl font-semibold text-gray-800 mb-4">Clinical Documentation Standards</h2>
+                    <p class="mb-4">"If it wasn't documented, it wasn't done." Documentation must be complete, accurate, and timely to ensure care continuity and compliance.</p>
+                    <ul class="space-y-3">
+                        <li class="flex items-start"><i class="fa-solid fa-pen-to-square text-blue-600 mt-1 mr-3"></i><span><strong>Standard:</strong> Use SOAP note format (Subjective, Objective, Assessment, Plan) in the EHR for all encounters.</span></li>
+                        <li class="flex items-start"><i class="fa-solid fa-clock text-blue-600 mt-1 mr-3"></i><span><strong>Timeliness:</strong> All encounters must be documented within 24 hours.</span></li>
+                        <li class="flex items-start"><i class="fa-solid fa-lock text-blue-600 mt-1 mr-3"></i><span><strong>Record Retention:</strong> Per Wisconsin law, medical records must be retained for a minimum of <strong>five years</strong> after the last patient entry.</span></li>
+                        <li class="flex items-start"><i class="fa-solid fa-comment-dots text-blue-600 mt-1 mr-3"></i><span><strong>Communications:</strong> Document all clinically significant patient communications (portal messages, phone calls) in the medical record.</span></li>
+                         <li class="flex items-start"><i class="fa-solid fa-file-medical text-blue-600 mt-1 mr-3"></i><span><strong>Specialized Services:</strong> Documentation for functional medicine, mental health, or addiction treatment must be especially detailed, including rationale for non-conventional tests, specific informed consent discussions, and clear treatment plans.</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div id="specialized-services-tab-content" class="tab-content hidden">
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                    <h2 class="text-2xl font-semibold text-gray-800 mb-4">Specialized Service Protocols</h2>
+                    <p class="mb-4">Protocols for our unique service offerings, ensuring care is evidence-based, compliant, and integrated.</p>
+                     <div class="mb-4">
+                        <div class="sm:hidden">
+                            <label for="tabs" class="sr-only">Select a tab</label>
+                            <select id="specialized-tabs-mobile" class="block w-full rounded-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500">
+                                <option value="functional-medicine-tab">Functional Medicine</option>
+                                <option value="mental-health-tab">Mental Health</option>
+                                <option value="addiction-treatment-tab">Addiction Treatment</option>
+                            </select>
+                        </div>
+                        <div class="hidden sm:block">
+                            <div class="border-b border-gray-200">
+                                <nav class="-mb-px flex space-x-8" aria-label="Tabs">
+                                    <button class="specialized-tab-button active text-[#4C6B57] whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm" data-specialized-tab="functional-medicine-tab">Functional Medicine</button>
+                                    <button class="specialized-tab-button text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm" data-specialized-tab="mental-health-tab">Mental Health</button>
+                                    <button class="specialized-tab-button text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm" data-specialized-tab="addiction-treatment-tab">Addiction Treatment</button>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="functional-medicine-tab-content" class="specialized-tab-content">
+                        <h3 class="font-semibold text-lg text-gray-700 mb-2">Functional Medicine</h3>
+                        <div class="callout p-4 rounded-md">
+                            <h4 class="font-bold text-gray-800">Informed Consent is CRITICAL</h4>
+                            <p class="text-sm">For any non-conventional tests or treatments, a detailed informed consent discussion is mandatory. Document the rationale, evidence base (or lack thereof), potential risks, benefits, alternatives, and costs. Ensure the patient understands and consents explicitly.</p>
+                        </div>
+                        <ul class="list-disc list-inside space-y-2 mt-4">
+                            <li><strong>Assessment:</strong> Use detailed intake forms to capture extensive history on diet, lifestyle, environment, and stress.</li>
+                            <li><strong>Advanced Labs:</strong> Document clear rationale for specialized testing (e.g., organic acids, stool analysis).</li>
+                            <li><strong>Treatment Plan:</strong> Detail specific nutritional interventions, supplement recommendations (with dosages and rationale), and lifestyle changes. Monitor for interactions and outcomes.</li>
+                        </ul>
+                    </div>
+
+                    <div id="mental-health-tab-content" class="specialized-tab-content hidden">
+                        <h3 class="font-semibold text-lg text-gray-700 mb-2">Mental Health Services</h3>
+                        <div class="callout p-4 rounded-md">
+                            <h4 class="font-bold text-gray-800">Heightened Confidentiality (Wis. Stat. § 51.30)</h4>
+                            <p class="text-sm">Mental health and substance use records have stricter confidentiality protections under Wisconsin law than general medical records. Be vigilant about disclosures.</p>
+                        </div>
+                        <ul class="list-disc list-inside space-y-2 mt-4">
+                            <li><strong>Screening:</strong> Use standardized tools like PHQ-9 (depression) and GAD-7 (anxiety).</li>
+                            <li><strong>Crisis Intervention:</strong> Follow protocols for assessing and managing crises, including safety assessment and timely referral to emergency services. Document all actions.</li>
+                            <li><strong>Documentation:</strong> Psychotherapy notes, if provided, are kept separate and have specific consent requirements for release.</li>
+                        </ul>
+                    </div>
+
+                     <div id="addiction-treatment-tab-content" class="specialized-tab-content hidden">
+                        <h3 class="font-semibold text-lg text-gray-700 mb-2">Addiction Treatment</h3>
+                        <div class="callout p-4 rounded-md">
+                            <h4 class="font-bold text-gray-800">Federal (42 CFR Part 2) & State Confidentiality</h4>
+                            <p class="text-sm">Records identifying a patient as receiving SUD treatment are protected by stringent federal and state laws. Unauthorized disclosure has severe penalties. A specific, written consent is required for almost any disclosure.</p>
+                        </div>
+                        <ul class="list-disc list-inside space-y-2 mt-4">
+                            <li><strong>Assessment:</strong> Use comprehensive tools (e.g., ASAM criteria) to assess addiction severity and guide treatment planning.</li>
+                            <li><strong>Medication-Assisted Treatment (MAT):</strong> If provided, requires specific informed consent, strict adherence to prescribing regulations (including ePDMP), and regular monitoring for efficacy and diversion.</li>
+                            <li><strong>Relapse Prevention:</strong> Collaboratively develop a written relapse prevention plan with the patient, identifying triggers and coping strategies.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- New Ketamine Assisted Psychotherapy Section -->
+        <section id="ketamine-protocols" class="page-content">
+            <h1 class="text-3xl font-bold text-[#4C6B57] mb-4">Ketamine Assisted Psychotherapy Protocols</h1>
+            <p class="text-lg text-gray-600 mb-8">Comprehensive KRF (Ketamine Research Foundation) evidence-based protocols specifically tailored for Lotus Direct Care's ketamine assisted psychotherapy program, emphasizing integration, safety, and therapeutic outcomes.</p>
+
+            <div class="space-y-4">
+                <div class="bg-white rounded-lg shadow-sm">
+                    <div class="accordion-header p-5 flex justify-between items-center border-b">
+                        <h2 class="text-xl font-semibold text-gray-800"><i class="fa-solid fa-heart-pulse mr-3 text-[#7D9A89]"></i>Lotus Direct Care KAP Philosophy & Approach</h2>
+                        <i class="fa-solid fa-chevron-down accordion-icon"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="p-5 text-gray-700 space-y-4">
+                            <div class="bg-blue-50 border-l-4 border-blue-400 p-4 mb-4">
+                                <h4 class="font-bold text-blue-800">Our Commitment to KRF Standards</h4>
+                                <p class="text-sm text-blue-700">Lotus Direct Care follows the Ketamine Research Foundation (KRF) guidelines for comprehensive Ketamine Assisted Psychotherapy (KAP), emphasizing therapeutic relationship, integration, and patient safety over simple medication administration.</p>
+                            </div>
+                            
+                            <h3 class="font-semibold text-lg text-gray-800">Core Principles</h3>
+                            <ul class="list-disc list-inside space-y-2">
+                                <li><strong>Psychotherapy Integration:</strong> Ketamine is administered as part of comprehensive psychotherapy, not merely as a drug treatment</li>
+                                <li><strong>Therapeutic Relationship:</strong> Emphasis on warmth, attention, and openness - the most important factors in psychotherapeutic success</li>
+                                <li><strong>Experience Processing:</strong> Every ketamine experience deserves to be heard, shared, and processed through Integration sessions</li>
+                                <li><strong>Harm Reduction:</strong> Comprehensive support and monitoring to prevent misuse and maximize therapeutic benefit</li>
+                                <li><strong>Personal Familiarity:</strong> Dr. Rosenberg has personal experience with ketamine to better understand and relate to patient experiences</li>
+                            </ul>
+
+                            <h3 class="font-semibold text-lg text-gray-800 mt-6">Differentiation from "Drug-Only" Approaches</h3>
+                            <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4">
+                                <p class="text-yellow-800 font-medium">Lotus Direct Care KAP vs. Traditional Ketamine Clinics:</p>
+                                <ul class="list-disc list-inside space-y-1 text-yellow-700 mt-2">
+                                    <li><strong>Higher Success Rates:</strong> KAP approach shows significantly higher success than drug-only (~30% remission) approaches</li>
+                                    <li><strong>Integration Focus:</strong> Processing experiences vs. just medication administration</li>
+                                    <li><strong>Extended Sessions:</strong> 2-3 hours vs. brief infusion appointments</li>
+                                    <li><strong>Therapeutic Presence:</strong> Continuous support vs. minimal interaction</li>
+                                    <li><strong>Comprehensive Care:</strong> Complete assessment and follow-up vs. limited evaluation</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-sm">
+                    <div class="accordion-header p-5 flex justify-between items-center border-b">
+                        <h2 class="text-xl font-semibold text-gray-800"><i class="fa-solid fa-user-check mr-3 text-[#7D9A89]"></i>Comprehensive Patient Assessment & Selection</h2>
+                        <i class="fa-solid fa-chevron-down accordion-icon"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="p-5 text-gray-700 space-y-4">
+                            <h3 class="font-semibold text-lg text-gray-800">KRF Comprehensive Evaluation Requirements</h3>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                                <div class="bg-gray-50 p-4 rounded">
+                                    <h4 class="font-semibold text-gray-800 mb-2">Medical & Psychiatric History</h4>
+                                    <ul class="list-disc list-inside text-sm space-y-1">
+                                        <li>Complete medical history and physical examination</li>
+                                        <li>Comprehensive psychiatric evaluation</li>
+                                        <li>Previous treatment history and outcomes</li>
+                                        <li>Current medications and interactions</li>
+                                    </ul>
+                                </div>
+                                <div class="bg-gray-50 p-4 rounded">
+                                    <h4 class="font-semibold text-gray-800 mb-2">Psychosocial Assessment</h4>
+                                    <ul class="list-disc list-inside text-sm space-y-1">
+                                        <li>Trauma history and PTSD screening</li>
+                                        <li>Relationship and family history</li>
+                                        <li>Social support systems</li>
+                                        <li>Work and financial status</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <h3 class="font-semibold text-lg text-gray-800">Substance Use Assessment</h3>
+                            <div class="bg-red-50 border-l-4 border-red-400 p-4 mb-4">
+                                <h4 class="font-bold text-red-800">Critical Safety Requirement</h4>
+                                <p class="text-sm text-red-700">Comprehensive substance use history including current use patterns, previous dependencies, and recovery history. Active substance abuse is an absolute contraindication.</p>
+                            </div>
+                            <ul class="list-disc list-inside space-y-2">
+                                <li><strong>Current Use Assessment:</strong> Alcohol, cannabis, prescription medications, illicit substances</li>
+                                <li><strong>Historical Patterns:</strong> Previous substance use disorders and treatment</li>
+                                <li><strong>Recovery Status:</strong> Length of sobriety and support systems</li>
+                                <li><strong>Toxicology Screening:</strong> Baseline and periodic testing as indicated</li>
+                            </ul>
+
+                            <h3 class="font-semibold text-lg text-gray-800 mt-6">Treatment Candidacy Criteria</h3>
+                            <div class="bg-green-50 border-l-4 border-green-400 p-4">
+                                <h4 class="font-bold text-green-800">Appropriate Candidates for Lotus Direct Care KAP</h4>
+                                <ul class="list-disc list-inside space-y-1 text-green-700 text-sm">
+                                    <li>Treatment-resistant depression with documented failed trials</li>
+                                    <li>PTSD unresponsive to conventional treatments</li>
+                                    <li>Anxiety disorders with treatment resistance</li>
+                                    <li>Individuals seeking personal growth and healing</li>
+                                    <li>Patients able to engage in psychotherapy process</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-sm">
+                    <div class="accordion-header p-5 flex justify-between items-center border-b">
+                        <h2 class="text-xl font-semibold text-gray-800"><i class="fa-solid fa-handshake mr-3 text-[#7D9A89]"></i>Pre-Treatment Preparation & Informed Consent</h2>
+                        <i class="fa-solid fa-chevron-down accordion-icon"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="p-5 text-gray-700 space-y-4">
+                            <h3 class="font-semibold text-lg text-gray-800">Preparatory Meeting Process</h3>
+                            <div class="bg-blue-50 border-l-4 border-blue-400 p-4 mb-4">
+                                <h4 class="font-bold text-blue-800">Building Trust and Familiarity</h4>
+                                <p class="text-sm text-blue-700">KRF standards require in-person preparatory meetings to create engagement and trust necessary for effective ketamine treatment.</p>
+                            </div>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div class="space-y-3">
+                                    <h4 class="font-semibold text-gray-800">Session 1: Initial Assessment</h4>
+                                    <ul class="list-disc list-inside text-sm space-y-1">
+                                        <li>Complete comprehensive evaluation</li>
+                                        <li>Discuss patient's pain and struggles</li>
+                                        <li>Explore patient's worldview and values</li>
+                                        <li>Assess positive attributes and strengths</li>
+                                        <li>Begin building therapeutic relationship</li>
+                                    </ul>
+                                </div>
+                                <div class="space-y-3">
+                                    <h4 class="font-semibold text-gray-800">Session 2: Treatment Planning</h4>
+                                    <ul class="list-disc list-inside text-sm space-y-1">
+                                        <li>Explain KAP process and expectations</li>
+                                        <li>Discuss financial considerations and insurance</li>
+                                        <li>Create initial treatment plan</li>
+                                        <li>Address questions and concerns</li>
+                                        <li>Complete informed consent process</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <h3 class="font-semibold text-lg text-gray-800 mt-6">KRF Meticulous Informed Consent Process</h3>
+                            <ul class="list-disc list-inside space-y-2">
+                                <li><strong>Treatment Explanation:</strong> Detailed explanation of KAP process, session structure, and expected timeline</li>
+                                <li><strong>Risk Discussion:</strong> Comprehensive review of potential risks, side effects, and contraindications</li>
+                                <li><strong>Alternative Treatments:</strong> Discussion of other available treatment options</li>
+                                <li><strong>Realistic Expectations:</strong> Acknowledgment that treatment course cannot be fully predicted</li>
+                                <li><strong>Safety Requirements:</strong> Transportation arrangements, post-treatment restrictions</li>
+                                <li><strong>Financial Transparency:</strong> Clear discussion of costs, insurance coverage, sliding scale options</li>
+                            </ul>
+
+                            <h3 class="font-semibold text-lg text-gray-800 mt-6">Family and Support System Integration</h3>
+                            <div class="bg-purple-50 border-l-4 border-purple-400 p-4">
+                                <p class="text-purple-800 font-medium">Important relationships are included as indicated:</p>
+                                <ul class="list-disc list-inside space-y-1 text-purple-700 mt-2 text-sm">
+                                    <li>Spouse/partner involvement in understanding treatment</li>
+                                    <li>Family therapy component for adolescent patients</li>
+                                    <li>Support system education about integration process</li>
+                                    <li>Collateral relationship involvement may evolve during treatment</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-sm">
+                    <div class="accordion-header p-5 flex justify-between items-center border-b">
+                        <h2 class="text-xl font-semibold text-gray-800"><i class="fa-solid fa-spa mr-3 text-[#7D9A89]"></i>KAP Session Structure & Administration</h2>
+                        <i class="fa-solid fa-chevron-down accordion-icon"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="p-5 text-gray-700 space-y-4">
+                            <h3 class="font-semibold text-lg text-gray-800">Session Environment & Setting</h3>
+                            <div class="bg-green-50 border-l-4 border-green-400 p-4 mb-4">
+                                <h4 class="font-bold text-green-800">Lotus Direct Care KAP Setting Requirements</h4>
+                                <p class="text-sm text-green-700">Our treatment room is specifically designed to suggest warmth and compassion, conducive to relaxation and healing.</p>
+                            </div>
+                            
+                            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+                                <div class="text-center p-3 bg-gray-50 rounded">
+                                    <i class="fa-solid fa-music text-2xl text-[#7D9A89] mb-2"></i>
+                                    <p class="text-sm font-medium">Curated Music</p>
+                                </div>
+                                <div class="text-center p-3 bg-gray-50 rounded">
+                                    <i class="fa-solid fa-couch text-2xl text-[#7D9A89] mb-2"></i>
+                                    <p class="text-sm font-medium">Reclining Chairs</p>
+                                </div>
+                                <div class="text-center p-3 bg-gray-50 rounded">
+                                    <i class="fa-solid fa-eye-slash text-2xl text-[#7D9A89] mb-2"></i>
+                                    <p class="text-sm font-medium">Eyeshades</p>
+                                </div>
+                                <div class="text-center p-3 bg-gray-50 rounded">
+                                    <i class="fa-solid fa-temperature-low text-2xl text-[#7D9A89] mb-2"></i>
+                                    <p class="text-sm font-medium">Climate Control</p>
+                                </div>
+                            </div>
+
+                            <h3 class="font-semibold text-lg text-gray-800">Three-Phase KAP Session Structure</h3>
+                            <div class="space-y-4">
+                                <div class="border-l-4 border-blue-400 pl-4">
+                                    <h4 class="font-semibold text-blue-800">Phase 1: Opening Period (30-45 minutes)</h4>
+                                    <ul class="list-disc list-inside text-sm space-y-1 mt-2">
+                                        <li><strong>Connection Building:</strong> Establish therapeutic presence and rapport</li>
+                                        <li><strong>Current State Review:</strong> Assess current stresses, concerns, and mental state</li>
+                                        <li><strong>Session Framing:</strong> Set intentions and expectations for the experience</li>
+                                        <li><strong>Preparation:</strong> Final safety checks and medication preparation</li>
+                                        <li><strong>Relaxation:</strong> Guided relaxation and centering exercises</li>
+                                    </ul>
+                                </div>
+                                
+                                <div class="border-l-4 border-green-400 pl-4">
+                                    <h4 class="font-semibold text-green-800">Phase 2: Ketamine Experience (60-90 minutes)</h4>
+                                    <ul class="list-disc list-inside text-sm space-y-1 mt-2">
+                                        <li><strong>Administration:</strong> Careful ketamine administration via chosen route</li>
+                                        <li><strong>Supportive Presence:</strong> Continuous therapeutic presence and monitoring</li>
+                                        <li><strong>Non-Directive Support:</strong> Allowing natural unfolding of experience</li>
+                                        <li><strong>Safety Monitoring:</strong> Vital signs and psychological state monitoring</li>
+                                        <li><strong>Gentle Guidance:</strong> Minimal intervention, maximum support</li>
+                                    </ul>
+                                </div>
+                                
+                                <div class="border-l-4 border-purple-400 pl-4">
+                                    <h4 class="font-semibold text-purple-800">Phase 3: Integration (45-60 minutes)</h4>
+                                    <ul class="list-disc list-inside text-sm space-y-1 mt-2">
+                                        <li><strong>Experience Processing:</strong> Sharing and exploring what was experienced</li>
+                                        <li><strong>Meaning Making:</strong> Discussing impact, insights, and significance</li>
+                                        <li><strong>Difficulty Processing:</strong> Addressing any challenging aspects</li>
+                                        <li><strong>Transition Planning:</strong> Preparing for return to daily life</li>
+                                        <li><strong>Follow-up Planning:</strong> Scheduling integration sessions</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <h3 class="font-semibold text-lg text-gray-800 mt-6">Administration Routes & Protocols</h3>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div class="bg-gray-50 p-4 rounded">
+                                    <h4 class="font-semibold text-gray-800 mb-2">Sublingual/Buccal (Primary Method)</h4>
+                                    <ul class="list-disc list-inside text-sm space-y-1">
+                                        <li><strong>Lozenges/RDTs:</strong> Rapid dissolving tablets or troches</li>
+                                        <li><strong>Proper Technique:</strong> "Swishing" saliva for 15-20 minutes</li>
+                                        <li><strong>Absorption:</strong> Through mucosal lining, not swallowing</li>
+                                        <li><strong>Onset:</strong> 15-30 minutes, duration 60-90 minutes</li>
+                                    </ul>
+                                </div>
+                                <div class="bg-gray-50 p-4 rounded">
+                                    <h4 class="font-semibold text-gray-800 mb-2">Intramuscular (When Indicated)</h4>
+                                    <ul class="list-disc list-inside text-sm space-y-1">
+                                        <li><strong>Rapid Onset:</strong> 2-3 minutes to effect</li>
+                                        <li><strong>Predictable Absorption:</strong> More reliable than oral routes</li>
+                                        <li><strong>Multiple Doses:</strong> 2-3 injections may be used</li>
+                                        <li><strong>Duration:</strong> 45-75 minutes peak experience</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-sm">
+                    <div class="accordion-header p-5 flex justify-between items-center border-b">
+                        <h2 class="text-xl font-semibold text-gray-800"><i class="fa-solid fa-brain mr-3 text-[#7D9A89]"></i>Integration & Follow-Up Protocols</h2>
+                        <i class="fa-solid fa-chevron-down accordion-icon"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="p-5 text-gray-700 space-y-4">
+                            <h3 class="font-semibold text-lg text-gray-800">Post-Session Integration Requirements</h3>
+                            <div class="bg-orange-50 border-l-4 border-orange-400 p-4 mb-4">
+                                <h4 class="font-bold text-orange-800">Critical KRF Requirement</h4>
+                                <p class="text-sm text-orange-700">Integration sessions must occur within days of the ketamine session. This is essential for processing experiences and incorporating insights into daily life.</p>
+                            </div>
+                            
+                            <h4 class="font-semibold text-gray-800">Integration Session Structure (48-72 hours post-KAP)</h4>
+                            <ul class="list-disc list-inside space-y-2">
+                                <li><strong>Experience Review:</strong> Detailed discussion of the ketamine experience</li>
+                                <li><strong>Insight Processing:</strong> Exploring meanings, revelations, and new perspectives</li>
+                                <li><strong>Emotional Processing:</strong> Working through any difficult or challenging aspects</li>
+                                <li><strong>Practical Application:</strong> How to incorporate insights into daily life</li>
+                                <li><strong>Treatment Planning:</strong> Adjusting ongoing treatment based on response</li>
+                            </ul>
+
+                            <h3 class="font-semibold text-lg text-gray-800 mt-6">Safety and Recovery Protocols</h3>
+                            <div class="bg-red-50 border-l-4 border-red-400 p-4">
+                                <h4 class="font-bold text-red-800">Non-Negotiable Safety Requirements</h4>
+                                <ul class="list-disc list-inside space-y-1 text-red-700 text-sm">
+                                    <li><strong>No Early Release:</strong> Patients remain until completely safe for discharge</li>
+                                    <li><strong>Transportation:</strong> Arranged rides required, no driving for 24 hours</li>
+                                    <li><strong>Support Person:</strong> Trusted person available for post-session support</li>
+                                    <li><strong>Emergency Contact:</strong> 24/7 availability for post-session concerns</li>
+                                </ul>
+                            </div>
+
+                            <h3 class="font-semibold text-lg text-gray-800 mt-6">Treatment Course Planning</h3>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div class="bg-gray-50 p-4 rounded">
+                                    <h4 class="font-semibold text-gray-800 mb-2">Initial Treatment Series</h4>
+                                    <ul class="list-disc list-inside text-sm space-y-1">
+                                        <li>Typically 6-8 sessions over 3-4 weeks</li>
+                                        <li>Frequency adjusted based on response</li>
+                                        <li>Integration session after each KAP session</li>
+                                        <li>Continuous assessment and plan adjustment</li>
+                                    </ul>
+                                </div>
+                                <div class="bg-gray-50 p-4 rounded">
+                                    <h4 class="font-semibold text-gray-800 mb-2">Maintenance Phase</h4>
+                                    <ul class="list-disc list-inside text-sm space-y-1">
+                                        <li>Monthly or bi-monthly sessions as needed</li>
+                                        <li>Ongoing psychotherapy support</li>
+                                        <li>Lifestyle and wellness integration</li>
+                                        <li>Long-term relationship maintenance</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <h3 class="font-semibold text-lg text-gray-800 mt-6">Success Metrics & Outcomes</h3>
+                            <ul class="list-disc list-inside space-y-2">
+                                <li><strong>Symptom Improvement:</strong> Standardized assessment tools (PHQ-9, GAD-7, etc.)</li>
+                                <li><strong>Functional Improvement:</strong> Work, relationships, daily activities</li>
+                                <li><strong>Quality of Life:</strong> Overall wellbeing and life satisfaction</li>
+                                <li><strong>Integration Success:</strong> Application of insights to daily life</li>
+                                <li><strong>Therapeutic Relationship:</strong> Ongoing connection and support</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-sm">
+                    <div class="accordion-header p-5 flex justify-between items-center border-b">
+                        <h2 class="text-xl font-semibold text-gray-800"><i class="fa-solid fa-shield-halved mr-3 text-[#7D9A89]"></i>Safety Protocols & Risk Management</h2>
+                        <i class="fa-solid fa-chevron-down accordion-icon"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="p-5 text-gray-700 space-y-4">
+                            <h3 class="font-semibold text-lg text-gray-800">Contraindications & Exclusions</h3>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div class="bg-red-50 p-4 rounded">
+                                    <h4 class="font-semibold text-red-800 mb-2">Absolute Contraindications</h4>
+                                    <ul class="list-disc list-inside text-sm space-y-1 text-red-700">
+                                        <li>Active substance abuse or dependency</li>
+                                        <li>History of psychosis or schizophrenia</li>
+                                        <li>Uncontrolled hypertension (>180/110)</li>
+                                        <li>Unstable cardiovascular disease</li>
+                                        <li>Pregnancy or nursing</li>
+                                        <li>Severe personality disorders (unable to engage)</li>
+                                    </ul>
+                                </div>
+                                <div class="bg-yellow-50 p-4 rounded">
+                                    <h4 class="font-semibold text-yellow-800 mb-2">Relative Contraindications</h4>
+                                    <ul class="list-disc list-inside text-sm space-y-1 text-yellow-700">
+                                        <li>History of substance use disorders (in remission)</li>
+                                        <li>Bipolar disorder (requires mood stabilization)</li>
+                                        <li>Significant medical comorbidities</li>
+                                        <li>Lack of adequate support system</li>
+                                        <li>Inability to arrange safe transportation</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <h3 class="font-semibold text-lg text-gray-800 mt-6">Emergency Protocols</h3>
+                            <div class="bg-red-50 border-l-4 border-red-400 p-4">
+                                <h4 class="font-bold text-red-800">Emergency Response Plan</h4>
+                                <ul class="list-disc list-inside space-y-1 text-red-700 text-sm">
+                                    <li><strong>Medical Emergency:</strong> Call 911, provide supportive care, contact emergency contact</li>
+                                    <li><strong>Psychological Crisis:</strong> De-escalation techniques, extended support, crisis intervention</li>
+                                    <li><strong>Adverse Reaction:</strong> Symptom management, medical evaluation, documentation</li>
+                                    <li><strong>Equipment Available:</strong> Blood pressure monitor, pulse oximeter, emergency medications</li>
+                                </ul>
+                            </div>
+
+                            <h3 class="font-semibold text-lg text-gray-800 mt-6">Documentation & Record Keeping</h3>
+                            <ul class="list-disc list-inside space-y-2">
+                                <li><strong>Session Notes:</strong> Detailed documentation of each phase of treatment</li>
+                                <li><strong>Vital Signs:</strong> Pre, during, and post-treatment monitoring</li>
+                                <li><strong>Patient Response:</strong> Subjective experience and objective observations</li>
+                                <li><strong>Integration Notes:</strong> Follow-up session documentation</li>
+                                <li><strong>Adverse Events:</strong> Any complications or unexpected responses</li>
+                                <li><strong>Treatment Plan Updates:</strong> Ongoing adjustments and rationale</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- New Controlled Substance Logging Section -->
+        <section id="controlled-substance-logging" class="page-content">
+            <h1 class="text-3xl font-bold text-[#4C6B57] mb-4">Controlled Substance Logging Protocols</h1>
+            <p class="text-lg text-gray-600 mb-8">Comprehensive protocols for the proper logging, inventory management, and regulatory compliance for controlled substances administered in the office, including ketamine and other Schedule III substances.</p>
+
+            <div class="space-y-4">
+                <div class="bg-white rounded-lg shadow-sm">
+                    <div class="accordion-header p-5 flex justify-between items-center border-b">
+                        <h2 class="text-xl font-semibold text-gray-800"><i class="fa-solid fa-gavel mr-3 text-[#7D9A89]"></i>Regulatory Requirements & Compliance</h2>
+                        <i class="fa-solid fa-chevron-down accordion-icon"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="p-5 text-gray-700 space-y-4">
+                            <div class="bg-red-50 border-l-4 border-red-400 p-4 mb-4">
+                                <h4 class="font-bold text-red-800">Legal Requirement</h4>
+                                <p class="text-sm text-red-700">All controlled substance records must be maintained for a minimum of <strong>5 years</strong> from the date of record and be available for inspection by authorized persons (DEA, state authorities).</p>
+                            </div>
+
+                            <h3 class="font-semibold text-lg text-gray-800">Federal Requirements (DEA)</h3>
+                            <ul class="list-disc list-inside space-y-2">
+                                <li><strong>DEA Registration:</strong> Current DEA registration required for all controlled substance handling</li>
+                                <li><strong>Schedule Classification:</strong> Ketamine is Schedule III (moderate abuse potential, accepted medical use)</li>
+                                <li><strong>Biennial Inventory:</strong> Complete inventory of all controlled substances every two years</li>
+                                <li><strong>Perpetual Inventory:</strong> Ongoing record of all receipts, administration, and disposal</li>
+                                <li><strong>Security Requirements:</strong> Secure storage in locked cabinet or safe</li>
+                            </ul>
+
+                            <h3 class="font-semibold text-lg text-gray-800 mt-6">Wisconsin State Requirements (Med 17.05)</h3>
+                            <ul class="list-disc list-inside space-y-2">
+                                <li><strong>Separate Bound Log Book:</strong> Each schedule of controlled substances must be recorded separately</li>
+                                <li><strong>Chronological Order:</strong> All entries must be in chronological order</li>
+                                <li><strong>Patient Records:</strong> All controlled substances dispensed must also be recorded in patient record</li>
+                                <li><strong>Location Requirement:</strong> Records maintained at location where substances are received/dispensed</li>
+                            </ul>
+
+                            <h3 class="font-semibold text-lg text-gray-800 mt-6">Required Information for Each Entry</h3>
+                            <div class="bg-blue-50 border-l-4 border-blue-400 p-4">
+                                <p class="text-blue-800 font-medium">Wisconsin law requires the following information for each controlled substance administration:</p>
+                                <ul class="list-disc list-inside space-y-1 text-blue-700 mt-2">
+                                    <li>Name of the substance</li>
+                                    <li>Dosage form and strength of the substance</li>
+                                    <li>Name and address of the person for whom dispensed/administered</li>
+                                    <li>Date of dispensing/administration</li>
+                                    <li>Quantity dispensed/administered</li>
+                                    <li>Name or initials of practitioner who dispensed/administered</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-sm">
+                    <div class="accordion-header p-5 flex justify-between items-center border-b">
+                        <h2 class="text-xl font-semibold text-gray-800"><i class="fa-solid fa-book mr-3 text-[#7D9A89]"></i>Daily Logging Procedures</h2>
+                        <i class="fa-solid fa-chevron-down accordion-icon"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="p-5 text-gray-700 space-y-4">
+                            <h3 class="font-semibold text-lg text-gray-800">Pre-Administration Protocol</h3>
+                            <div class="relative pl-8 process-step">
+                                <div class="absolute -left-4 top-0 flex items-center justify-center process-circle">1</div>
+                                <h4 class="font-semibold text-gray-800">Inventory Verification</h4>
+                                <p>Verify current inventory count matches log book records. Investigate and document any discrepancies immediately.</p>
+                            </div>
+                            <div class="relative pl-8 process-step">
+                                <div class="absolute -left-4 top-0 flex items-center justify-center process-circle">2</div>
+                                <h4 class="font-semibold text-gray-800">Patient Verification</h4>
+                                <p>Confirm patient identity using two identifiers. Verify prescription/order authorization and dosage.</p>
+                            </div>
+                            <div class="relative pl-8 process-step">
+                                <div class="absolute -left-4 top-0 flex items-center justify-center process-circle">3</div>
+                                <h4 class="font-semibold text-gray-800">Pre-Administration Documentation</h4>
+                                <p>Document starting inventory amount and prepare administration record entry.</p>
+                            </div>
+
+                            <h3 class="font-semibold text-lg text-gray-800 mt-6">Administration Documentation</h3>
+                            <div class="bg-gray-50 p-4 rounded">
+                                <h4 class="font-semibold text-gray-800 mb-2">Required Log Book Entry Format:</h4>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                                    <div>
+                                        <p><strong>Date/Time:</strong> MM/DD/YYYY, HH:MM</p>
+                                        <p><strong>Substance:</strong> Ketamine HCl</p>
+                                        <p><strong>Strength:</strong> 50 mg/mL</p>
+                                        <p><strong>Amount:</strong> [quantity administered]</p>
+                                    </div>
+                                    <div>
+                                        <p><strong>Patient:</strong> [Full name and address]</p>
+                                        <p><strong>Practitioner:</strong> [Name or initials]</p>
+                                        <p><strong>Witness:</strong> [If required]</p>
+                                        <p><strong>Balance:</strong> [Remaining inventory]</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <h3 class="font-semibold text-lg text-gray-800 mt-6">Post-Administration Protocol</h3>
+                            <div class="relative pl-8 process-step">
+                                <div class="absolute -left-4 top-0 flex items-center justify-center process-circle">1</div>
+                                <h4 class="font-semibold text-gray-800">Waste Documentation</h4>
+                                <p>Document any unused portions or waste. Witness disposal if required. Update inventory balance.</p>
+                            </div>
+                            <div class="relative pl-8 process-step">
+                                <div class="absolute -left-4 top-0 flex items-center justify-center process-circle">2</div>
+                                <h4 class="font-semibold text-gray-800">Patient Record Entry</h4>
+                                <p>Enter administration details in patient's medical record, including dose, time, route, and patient response.</p>
+                            </div>
+                            <div class="relative pl-8 process-step">
+                                <div class="absolute -left-4 top-0 flex items-center justify-center process-circle">3</div>
+                                <h4 class="font-semibold text-gray-800">Security Check</h4>
+                                <p>Ensure controlled substances are properly secured and storage area is locked.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-sm">
+                    <div class="accordion-header p-5 flex justify-between items-center border-b">
+                        <h2 class="text-xl font-semibold text-gray-800"><i class="fa-solid fa-warehouse mr-3 text-[#7D9A89]"></i>Inventory Management & Security</h2>
+                        <i class="fa-solid fa-chevron-down accordion-icon"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="p-5 text-gray-700 space-y-4">
+                            <h3 class="font-semibold text-lg text-gray-800">Storage Requirements</h3>
+                            <ul class="list-disc list-inside space-y-2">
+                                <li><strong>Secure Cabinet:</strong> DEA-approved locked cabinet or safe, bolted to floor/wall</li>
+                                <li><strong>Limited Access:</strong> Only authorized personnel have keys/combinations</li>
+                                <li><strong>Separate Storage:</strong> Controlled substances stored separately from other medications</li>
+                                <li><strong>Environmental Controls:</strong> Appropriate temperature and humidity control</li>
+                                <li><strong>Inventory Segregation:</strong> Each schedule stored and tracked separately</li>
+                            </ul>
+
+                            <h3 class="font-semibold text-lg text-gray-800 mt-6">Perpetual Inventory System</h3>
+                            <div class="bg-green-50 border-l-4 border-green-400 p-4">
+                                <h4 class="font-bold text-green-800">Daily Balance Verification</h4>
+                                <p class="text-sm text-green-700">At the end of each day, verify that the physical inventory matches the log book balance. Investigate any discrepancies immediately.</p>
+                            </div>
+                            <ul class="list-disc list-inside space-y-2 mt-4">
+                                <li><strong>Opening Balance:</strong> Record starting inventory each day</li>
+                                <li><strong>Receipts:</strong> Log all new controlled substance deliveries</li>
+                                <li><strong>Administrations:</strong> Record each use with running balance</li>
+                                <li><strong>Waste/Loss:</strong> Document any waste, spillage, or loss</li>
+                                <li><strong>Closing Balance:</strong> Verify ending inventory matches calculations</li>
+                            </ul>
+
+                            <h3 class="font-semibold text-lg text-gray-800 mt-6">Biennial Inventory Requirements</h3>
+                            <ul class="list-disc list-inside space-y-2">
+                                <li><strong>Frequency:</strong> Complete physical inventory every two years (at minimum)</li>
+                                <li><strong>Documentation:</strong> Record exact quantities of each controlled substance</li>
+                                <li><strong>Opened Containers:</strong> Estimate quantities in opened vials/containers</li>
+                                <li><strong>Reconciliation:</strong> Compare physical count to perpetual inventory records</li>
+                                <li><strong>Discrepancy Investigation:</strong> Document and investigate any variances</li>
+                            </ul>
+
+                            <h3 class="font-semibold text-lg text-gray-800 mt-6">Loss or Theft Reporting</h3>
+                            <div class="bg-red-50 border-l-4 border-red-400 p-4">
+                                <h4 class="font-bold text-red-800">Immediate Action Required</h4>
+                                <ul class="list-disc list-inside space-y-1 text-red-700 text-sm">
+                                    <li>Report to DEA within 1 business day (DEA Form 106)</li>
+                                    <li>Report to local police immediately</li>
+                                    <li>Document circumstances and investigation</li>
+                                    <li>Implement additional security measures as needed</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-sm">
+                    <div class="accordion-header p-5 flex justify-between items-center border-b">
+                        <h2 class="text-xl font-semibold text-gray-800"><i class="fa-solid fa-trash mr-3 text-[#7D9A89]"></i>Disposal & Waste Management</h2>
+                        <i class="fa-solid fa-chevron-down accordion-icon"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="p-5 text-gray-700 space-y-4">
+                            <h3 class="font-semibold text-lg text-gray-800">Waste Documentation Requirements</h3>
+                            <ul class="list-disc list-inside space-y-2">
+                                <li><strong>Immediate Documentation:</strong> Record waste at time of occurrence</li>
+                                <li><strong>Witness Requirement:</strong> Second person witness for waste disposal when possible</li>
+                                <li><strong>Reason Documentation:</strong> Clear reason for waste (unused portion, contamination, etc.)</li>
+                                <li><strong>Method Documentation:</strong> How waste was disposed of or destroyed</li>
+                                <li><strong>Signature Requirements:</strong> Both disposing practitioner and witness signatures</li>
+                            </ul>
+
+                            <h3 class="font-semibold text-lg text-gray-800 mt-6">Approved Disposal Methods</h3>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div class="bg-gray-50 p-4 rounded">
+                                    <h4 class="font-semibold text-gray-800">Small Quantities (Daily Waste)</h4>
+                                    <ul class="list-disc list-inside text-sm space-y-1">
+                                        <li>Witness disposal down sink/toilet</li>
+                                        <li>Document in waste log immediately</li>
+                                        <li>Both parties sign waste entry</li>
+                                        <li>Update perpetual inventory</li>
+                                    </ul>
+                                </div>
+                                <div class="bg-gray-50 p-4 rounded">
+                                    <h4 class="font-semibold text-gray-800">Large Quantities (Expired Stock)</h4>
+                                    <ul class="list-disc list-inside text-sm space-y-1">
+                                        <li>DEA authorized disposal method</li>
+                                        <li>Licensed waste disposal company</li>
+                                        <li>DEA Form 41 for destruction</li>
+                                        <li>Certificate of destruction required</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <h3 class="font-semibold text-lg text-gray-800 mt-6">Record Retention</h3>
+                            <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4">
+                                <h4 class="font-bold text-yellow-800">5-Year Retention Requirement</h4>
+                                <p class="text-sm text-yellow-700">All controlled substance records, including disposal documentation, must be retained for minimum 5 years and be readily available for inspection.</p>
+                            </div>
+                            <ul class="list-disc list-inside space-y-2 mt-4">
+                                <li>Daily administration logs</li>
+                                <li>Waste and disposal records</li>
+                                <li>Biennial inventory records</li>
+                                <li>Purchase invoices and receipts</li>
+                                <li>DEA forms and correspondence</li>
+                                <li>Loss/theft reports and investigations</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="practice-safety" class="page-content">
+             <h1 class="text-3xl font-bold text-[#4C6B57] mb-4">Practice Operations & Safety</h1>
+            <p class="text-lg text-gray-600 mb-8">This section covers the essential operational and safety protocols that protect our staff, our patients, and our practice. It includes key OSHA requirements, state-specific rules for facility management, and procedures for laboratory testing.</p>
+
+            <div class="space-y-4">
+                <div class="bg-white rounded-lg shadow-sm">
+                    <div class="accordion-header p-5 flex justify-between items-center border-b">
+                        <h2 class="text-xl font-semibold text-gray-800"><i class="fa-solid fa-hard-hat mr-3 text-[#7D9A89]"></i>OSHA: Workplace Safety</h2>
+                        <i class="fa-solid fa-chevron-down accordion-icon"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="p-5 text-gray-700 space-y-4">
+                           <p>We are committed to providing a safe work environment by complying with all OSHA standards.</p>
+                           <div class="callout p-4 rounded-md">
+                                <h4 class="font-semibold text-gray-800">Bloodborne Pathogen (BBP) Exposure Control Plan</h4>
+                                <p class="text-sm mt-1">This is a mandatory written plan that must be reviewed and updated annually. Key components include:</p>
+                                <ul class="list-disc list-inside text-sm space-y-1 mt-2">
+                                   <li><strong>Exposure Determination:</strong> Identifying jobs and tasks with potential exposure.</li>
+                                   <li><strong>Compliance Methods:</strong> Use of universal precautions, engineering controls (e.g., sharps containers), and work practice controls (e.g., no recapping needles).</li>
+                                   <li><strong>Hepatitis B Vaccination:</strong> Offered free to at-risk employees.</li>
+                                   <li><strong>Post-Exposure Follow-up:</strong> A clear, confidential protocol for evaluating and treating any exposure incidents.</li>
+                                   <li><strong>Annual Training:</strong> Mandatory for all staff with potential exposure.</li>
+                                </ul>
+                            </div>
+                            <div class="callout p-4 rounded-md">
+                                <h4 class="font-semibold text-gray-800">Hazard Communication</h4>
+                                <ul class="list-disc list-inside text-sm space-y-1 mt-2">
+                                    <li><strong>Safety Data Sheets (SDSs):</strong> Must be readily accessible for every hazardous chemical in the practice.</li>
+                                    <li><strong>Labeling:</strong> All chemical containers must be properly labeled.</li>
+                                    <li><strong>Training:</strong> Staff must be trained on the risks of chemicals they use.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                 <div class="bg-white rounded-lg shadow-sm">
+                    <div class="accordion-header p-5 flex justify-between items-center border-b">
+                        <h2 class="text-xl font-semibold text-gray-800"><i class="fa-solid fa-biohazard mr-3 text-[#7D9A89]"></i>Medical Waste Disposal (WI DNR Rules)</h2>
+                        <i class="fa-solid fa-chevron-down accordion-icon"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="p-5 text-gray-700 space-y-4">
+                           <p>Proper handling and disposal of medical and infectious waste is governed by the Wisconsin Department of Natural Resources (DNR) and is critical for public and environmental health.</p>
+                           <div class="relative pl-8 process-step">
+                                <div class="absolute -left-4 top-0 flex items-center justify-center process-circle">1</div>
+                                <h4 class="font-semibold text-gray-800">Segregation</h4>
+                                <p>Separate infectious waste (e.g., sharps, items saturated with blood) from regular trash at the point of generation.</p>
+                           </div>
+                           <div class="relative pl-8 process-step">
+                                <div class="absolute -left-4 top-0 flex items-center justify-center process-circle">2</div>
+                                <h4 class="font-semibold text-gray-800">Containment & Labeling</h4>
+                                <p>Sharps go in rigid, puncture-resistant, labeled containers. Other infectious waste goes in sealed, leak-proof bags within rigid, labeled outer containers.</p>
+                           </div>
+                           <div class="relative pl-8 process-step">
+                                <div class="absolute -left-4 top-0 flex items-center justify-center process-circle">3</div>
+                                <h4 class="font-semibold text-gray-800">Storage</h4>
+                                <p>Store in a designated, secure area for no more than 90 days before disposal.</p>
+                           </div>
+                           <div class="relative pl-8 process-step">
+                                <div class="absolute -left-4 top-0 flex items-center justify-center process-circle">4</div>
+                                <h4 class="font-semibold text-gray-800">Transport & Disposal</h4>
+                                <p>Must use a licensed commercial medical waste hauler. Do NOT use local residential drop-off sites.</p>
+                           </div>
+                           <div class="relative pl-8 process-step">
+                                <div class="absolute -left-4 top-0 flex items-center justify-center process-circle">5</div>
+                                <h4 class="font-semibold text-gray-800">Record-Keeping</h4>
+                                <p>Maintain waste manifests and certificates of destruction for at least <strong>five years</strong>.</p>
+                           </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-lg shadow-sm">
+                    <div class="accordion-header p-5 flex justify-between items-center border-b">
+                        <h2 class="text-xl font-semibold text-gray-800"><i class="fa-solid fa-microscope mr-3 text-[#7D9A89]"></i>CLIA: Laboratory Testing</h4>
+                        <i class="fa-solid fa-chevron-down accordion-icon"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="p-5 text-gray-700 space-y-4">
+                           <p>Any on-site lab testing, even simple "waived" tests, must comply with the Clinical Laboratory Improvement Amendments (CLIA).</p>
+                           <ul class="list-disc list-inside space-y-2">
+                               <li><strong>Certificate of Waiver:</strong> The practice must maintain a current CLIA Certificate of Waiver covering all tests performed on-site.</li>
+                               <li><strong>Manufacturer's Instructions:</strong> We must strictly follow the manufacturer's instructions for every test, without deviation.</li>
+                               <li><strong>Quality Control (QC):</strong> Perform and document QC tests as required by the manufacturer (e.g., daily for many point-of-care tests). Patient testing cannot proceed if QC fails.</li>
+                               <li><strong>Training & Competency:</strong> All personnel performing tests must be trained and have their competency assessed and documented annually.</li>
+                           </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="compliance-center" class="page-content">
+            <h1 class="text-3xl font-bold text-[#4C6B57] mb-4">Compliance Center</h1>
+            <p class="text-lg text-gray-600 mb-8">This section provides a centralized overview of the key federal and state regulations governing Lotus Direct Care. Use this area for high-level summaries, compliance checks, and quick access to detailed policies.</p>
+
+            <div class="bg-white p-6 rounded-lg shadow-md mb-8">
+                <h2 class="text-xl font-semibold mb-4 text-gray-800">Regulatory Pillars at a Glance</h2>
+                <div class="chart-container">
+                    <canvas id="complianceChart"></canvas>
+                </div>
+                <p class="text-center text-sm text-gray-500 mt-2">Click a bar on the chart to jump to the corresponding summary below.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div id="compliance-hipaa" class="bg-white p-6 rounded-lg shadow-sm border-l-4 border-blue-500">
+                    <h3 class="text-lg font-semibold text-blue-800">HIPAA: Patient Privacy & Security</h3>
+                    <p class="mt-2 text-sm text-gray-600">Protects all Protected Health Information (PHI). Key requirements include the Privacy Rule, Security Rule, and Breach Notification Rule. We must enforce the "Minimum Necessary" standard, secure patient authorizations, and have robust Business Associate Agreements (BAAs) with all vendors handling PHI.</p>
+                </div>
+                <div id="compliance-osha" class="bg-white p-6 rounded-lg shadow-sm border-l-4 border-orange-500">
+                    <h3 class="text-lg font-semibold text-orange-800">OSHA: Workplace Safety</h3>
+                    <p class="mt-2 text-sm text-gray-600">Ensures a safe environment for all staff. Requires a written Bloodborne Pathogen Exposure Control Plan (updated annually), a Hazard Communication program (with accessible SDSs), provision of Personal Protective Equipment (PPE), and mandatory safety training.</p>
+                </div>
+                 <div id="compliance-clia" class="bg-white p-6 rounded-lg shadow-sm border-l-4 border-purple-500">
+                    <h3 class="text-lg font-semibold text-purple-800">CLIA: Laboratory Standards</h3>
+                    <p class="mt-2 text-sm text-gray-600">Governs all on-site lab testing. For waived tests, we must maintain a Certificate of Waiver, follow all manufacturer instructions precisely, perform and document quality controls, and ensure all testing personnel are trained and competent.</p>
+                </div>
+                 <div id="compliance-wi-meb" class="bg-white p-6 rounded-lg shadow-sm border-l-4 border-green-500">
+                    <h3 class="text-lg font-semibold text-green-800">WI Medical Examining Board (MEB)</h3>
+                    <p class="mt-2 text-sm text-gray-600">Governs the practice of medicine in Wisconsin. Key rules include standards of professional conduct (Med 10), telehealth requirements (Med 24), record-keeping (5-year retention), and truthful advertising. All care must meet the standard of minimally competent medical practice.</p>
+                </div>
+                 <div id="compliance-wi-dpc" class="bg-white p-6 rounded-lg shadow-sm border-l-4 border-teal-500">
+                    <h3 class="text-lg font-semibold text-teal-800">WI DPC & Patient Rights Law</h3>
+                    <p class="mt-2 text-sm text-gray-600">State laws provide specific rules for DPC agreements to distinguish them from insurance. They also grant patients specific rights, especially for mental health/SUD records (Wis. Stat. § 51.61) and minor consent, which may be stricter than HIPAA.</p>
+                </div>
+                 <div id="compliance-wi-dnr" class="bg-white p-6 rounded-lg shadow-sm border-l-4 border-gray-500">
+                    <h3 class="text-lg font-semibold text-gray-800">WI DNR: Environmental Safety</h3>
+                    <p class="mt-2 text-sm text-gray-600">The Department of Natural Resources sets stringent rules for medical and infectious waste disposal. This includes proper segregation, containment, labeling, storage, and use of a licensed commercial hauler. Manifests must be kept for 5 years.</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    // Enhanced state management
+    const state = {
+        currentPage: 'dashboard',
+        isLoading: false,
+        animations: {
+            enabled: !window.matchMedia('(prefers-reduced-motion: reduce)').matches
+        }
+    };
+
+    // DOM elements
+    const mainContent = document.getElementById('main-content');
+    const navLinks = document.querySelectorAll('.nav-link');
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const quickLinks = document.querySelectorAll('.quick-link');
+
+    // Enhanced navigation with loading states and animations
+    function navigateTo(targetId, subTargetId = null) {
+        if (state.isLoading) return;
+        
+        state.isLoading = true;
+        state.currentPage = targetId;
+        
+        // Add loading state
+        if (state.animations.enabled) {
+            mainContent.style.opacity = '0.7';
+            mainContent.style.pointerEvents = 'none';
+        }
+
+        // Update page content with enhanced animations
+        document.querySelectorAll('.page-content').forEach(page => {
+            page.classList.remove('active');
+            if (state.animations.enabled) {
+                page.style.transform = 'translateY(20px)';
+                page.style.opacity = '0';
+            }
+        });
+
+        setTimeout(() => {
+            const targetPage = document.getElementById(targetId);
+            if (targetPage) {
+                targetPage.classList.add('active');
+                
+                if (state.animations.enabled) {
+                    targetPage.style.transform = 'translateY(0)';
+                    targetPage.style.opacity = '1';
+                }
+            }
+
+            // Update navigation states with enhanced feedback
+            navLinks.forEach(link => {
+                const isActive = link.dataset.target === targetId;
+                link.classList.toggle('active', isActive);
+                
+                if (state.animations.enabled && isActive) {
+                    link.style.transform = 'translateY(-2px)';
+                    setTimeout(() => {
+                        link.style.transform = '';
+                    }, 200);
+                }
+            });
+            
+            // Close mobile menu with animation
+            if (!mobileMenu.classList.contains('hidden')) {
+                mobileMenu.classList.add('mobile-menu-exit');
+                setTimeout(() => {
+                    mobileMenu.classList.remove('block', 'mobile-menu-exit');
+                    mobileMenu.classList.add('hidden');
+                }, 300);
+            }
+
+            // Handle sub-targets with improved scrolling
+            if (subTargetId) {
+                setTimeout(() => {
+                    const subTargetElement = document.getElementById(subTargetId) || 
+                                           document.querySelector(`[data-specialized-tab="${subTargetId}"]`);
+                    if (subTargetElement) {
+                        // Enhanced smooth scrolling with offset for sticky header
+                        const headerHeight = document.querySelector('header').offsetHeight;
+                        const elementPosition = subTargetElement.getBoundingClientRect().top + window.pageYOffset;
+                        const offsetPosition = elementPosition - headerHeight - 20;
+
+                        window.scrollTo({
+                            top: offsetPosition,
+                            behavior: 'smooth'
+                        });
+                        
+                        // Enhanced interaction feedback
+                        if (subTargetElement.classList.contains('accordion-header')) {
+                            const content = subTargetElement.nextElementSibling;
+                            if (!content.style.maxHeight) {
+                                subTargetElement.click();
+                            }
+                            // Add highlight effect
+                            subTargetElement.style.background = 'linear-gradient(135deg, #EFEBE6 0%, #e8e4df 100%)';
+                            setTimeout(() => {
+                                subTargetElement.style.background = '';
+                            }, 2000);
+                        } else if (subTargetElement.classList.contains('specialized-tab-button')) {
+                            subTargetElement.click();
+                        }
+                    }
+                }, 150);
+            } else {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+
+            // Remove loading state
+            setTimeout(() => {
+                mainContent.style.opacity = '';
+                mainContent.style.pointerEvents = '';
+                state.isLoading = false;
+            }, 100);
+        }, state.animations.enabled ? 150 : 0);
+    }
+    
+    // Initialize with enhanced error handling
+    try {
+        navigateTo('dashboard');
+    } catch (error) {
+        console.error('Navigation initialization failed:', error);
+        // Fallback to show dashboard without animations
+        document.getElementById('dashboard').classList.add('active');
+    }
+
+    // Enhanced navigation event listeners
+    navLinks.forEach(link => {
+        link.addEventListener('click', function (e) {
+            e.preventDefault();
+            const targetId = this.dataset.target;
+            if (targetId && targetId !== state.currentPage) {
+                navigateTo(targetId);
+            }
+        });
+
+        // Add keyboard navigation
+        link.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                this.click();
+            }
+        });
+    });
+    
+    // Enhanced quick links with better feedback
+    quickLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetId = this.dataset.target;
+            const subTargetId = this.dataset.subtarget;
+            
+            if (targetId) {
+                // Add click feedback
+                if (state.animations.enabled) {
+                    this.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        this.style.transform = '';
+                    }, 150);
+                }
+                
+                navigateTo(targetId, subTargetId);
+            }
+        });
+    });
+
+    // Enhanced mobile menu with better animations
+    mobileMenuButton.addEventListener('click', function() {
+        const isHidden = mobileMenu.classList.contains('hidden');
+        
+        if (isHidden) {
+            mobileMenu.classList.remove('hidden');
+            mobileMenu.classList.add('block', 'mobile-menu-enter');
+            setTimeout(() => {
+                mobileMenu.classList.remove('mobile-menu-enter');
+            }, 300);
+        } else {
+            mobileMenu.classList.add('mobile-menu-exit');
+            setTimeout(() => {
+                mobileMenu.classList.remove('block', 'mobile-menu-exit');
+                mobileMenu.classList.add('hidden');
+            }, 300);
+        }
+
+        // Update button icon with animation
+        const icon = this.querySelector('i');
+        if (icon) {
+            icon.style.transform = 'rotate(180deg)';
+            setTimeout(() => {
+                icon.classList.toggle('fa-bars');
+                icon.classList.toggle('fa-times');
+                icon.style.transform = '';
+            }, 150);
+        }
+    });
+
+    // Enhanced accordion functionality
+    const accordions = document.querySelectorAll('.accordion-header');
+    accordions.forEach(accordion => {
+        accordion.addEventListener('click', function () {
+            const isActive = this.classList.contains('active');
+            
+            // Close other accordions in the same section (optional)
+            const section = this.closest('section');
+            if (section) {
+                section.querySelectorAll('.accordion-header.active').forEach(other => {
+                    if (other !== this) {
+                        other.classList.remove('active');
+                        const otherContent = other.nextElementSibling;
+                        const otherIcon = other.querySelector('.accordion-icon');
+                        if (otherContent) otherContent.style.maxHeight = null;
+                        if (otherIcon) {
+                            otherIcon.classList.add('fa-chevron-down');
+                            otherIcon.classList.remove('fa-chevron-up');
+                        }
+                    }
+                });
+            }
+
+            this.classList.toggle('active');
+            const icon = this.querySelector('.accordion-icon');
+            const content = this.nextElementSibling;
+
+            if (icon) {
+                icon.classList.toggle('fa-chevron-down');
+                icon.classList.toggle('fa-chevron-up');
+            }
+
+            if (content) {
+                if (content.style.maxHeight) {
+                    content.style.maxHeight = null;
+                } else {
+                    content.style.maxHeight = content.scrollHeight + "px";
+                    
+                    // Auto-scroll to keep content in view
+                    setTimeout(() => {
+                        const rect = this.getBoundingClientRect();
+                        const headerHeight = document.querySelector('header').offsetHeight;
+                        if (rect.top < headerHeight) {
+                            this.scrollIntoView({ 
+                                behavior: 'smooth', 
+                                block: 'start' 
+                            });
+                        }
+                    }, 300);
+                }
+            }
+        });
+
+        // Add keyboard support
+        accordion.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                this.click();
+            }
+        });
+    });
+
+    // Enhanced tab functionality
+    const tabButtons = document.querySelectorAll('.tab-button');
+    const tabContents = document.querySelectorAll('.tab-content');
+    
+    function switchTab(activeButton) {
+        tabButtons.forEach(btn => {
+            btn.classList.remove('active', 'text-gray-900', 'border-indigo-500');
+            btn.setAttribute('aria-selected', 'false');
+        });
+        
+        activeButton.classList.add('active', 'text-gray-900', 'border-indigo-500');
+        activeButton.setAttribute('aria-selected', 'true');
+
+        const tabId = activeButton.dataset.tab;
+        tabContents.forEach(content => {
+            const shouldShow = content.id === `${tabId}-content`;
+            content.classList.toggle('hidden', !shouldShow);
+            content.setAttribute('aria-hidden', !shouldShow);
+            
+            if (shouldShow && state.animations.enabled) {
+                content.style.opacity = '0';
+                content.style.transform = 'translateY(10px)';
+                setTimeout(() => {
+                    content.style.opacity = '1';
+                    content.style.transform = 'translateY(0)';
+                }, 50);
+            }
+        });
+    }
+
+    tabButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            switchTab(this);
+        });
+
+        button.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                switchTab(this);
+            }
+        });
+    });
+
+    if (tabButtons.length > 0) {
+        switchTab(tabButtons[0]);
+    }
+    
+    // Enhanced specialized tabs
+    const specializedTabButtons = document.querySelectorAll('.specialized-tab-button');
+    const specializedTabContents = document.querySelectorAll('.specialized-tab-content');
+    const specializedTabsMobile = document.getElementById('specialized-tabs-mobile');
+
+    function switchSpecializedTab(tabId) {
+        specializedTabButtons.forEach(btn => {
+            const isActive = btn.dataset.specializedTab === tabId;
+            btn.classList.toggle('active', isActive);
+            btn.classList.toggle('text-[#4C6B57]', isActive);
+            btn.classList.toggle('text-gray-500', !isActive);
+            btn.setAttribute('aria-selected', isActive);
+        });
+        
+        specializedTabContents.forEach(content => {
+            const shouldShow = content.id === `${tabId}-content`;
+            content.classList.toggle('hidden', !shouldShow);
+            content.setAttribute('aria-hidden', !shouldShow);
+        });
+
+        if (specializedTabsMobile) {
+            specializedTabsMobile.value = tabId;
+        }
+    }
+
+    specializedTabButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            switchSpecializedTab(this.dataset.specializedTab);
+        });
+    });
+    
+    if (specializedTabsMobile) {
+        specializedTabsMobile.addEventListener('change', function() {
+            switchSpecializedTab(this.value);
+        });
+    }
+
+    if (specializedTabButtons.length > 0) {
+        switchSpecializedTab(specializedTabButtons[0].dataset.specializedTab);
+    }
+
+    // Enhanced chart functionality with better error handling
+    function createComplianceChart() {
+        const canvas = document.getElementById('complianceChart');
+        if (!canvas) {
+            console.warn('Compliance chart canvas not found');
+            return;
+        }
+
+        try {
+            const ctx = canvas.getContext('2d');
+            const complianceChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['HIPAA', 'OSHA', 'CLIA', 'WI MEB', 'WI DPC Law', 'WI DNR'],
+                    datasets: [{
+                        label: 'Key Regulatory Pillars',
+                        data: [10, 10, 10, 10, 10, 10],
+                        backgroundColor: [
+                            'rgba(59, 130, 246, 0.8)',
+                            'rgba(249, 115, 22, 0.8)',
+                            'rgba(168, 85, 247, 0.8)',
+                            'rgba(34, 197, 94, 0.8)',
+                            'rgba(20, 184, 166, 0.8)',
+                            'rgba(107, 114, 128, 0.8)'
+                        ],
+                        borderColor: [
+                            'rgba(59, 130, 246, 1)',
+                            'rgba(249, 115, 22, 1)',
+                            'rgba(168, 85, 247, 1)',
+                            'rgba(34, 197, 94, 1)',
+                            'rgba(20, 184, 166, 1)',
+                            'rgba(107, 114, 128, 1)'
+                        ],
+                        borderWidth: 2,
+                        borderRadius: 4,
+                        borderSkipped: false,
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    indexAxis: 'y',
+                    animation: {
+                        duration: state.animations.enabled ? 1000 : 0,
+                        easing: 'easeOutQuart'
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            enabled: true,
+                            backgroundColor: 'rgba(76, 107, 87, 0.9)',
+                            titleColor: '#ffffff',
+                            bodyColor: '#ffffff',
+                            borderColor: '#4C6B57',
+                            borderWidth: 1,
+                            callbacks: {
+                                label: function(context) {
+                                    return `Click to view ${context.label} details`;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            display: false,
+                        },
+                        y: {
+                            ticks: {
+                                font: {
+                                    size: 14,
+                                    weight: '500'
+                                },
+                                color: '#4A5568'
+                            },
+                            grid: {
+                                display: false
+                            }
+                        }
+                    },
+                    onClick: (e) => {
+                        const activePoints = complianceChart.getElementsAtEventForMode(e, 'nearest', { intersect: true }, true);
+                        if (activePoints.length) {
+                            const firstPoint = activePoints[0];
+                            const label = complianceChart.data.labels[firstPoint.index].toLowerCase().replace(/\s/g, '-');
+                            const element = document.getElementById(`compliance-${label}`);
+                            if (element) {
+                                // Enhanced scroll and highlight
+                                const headerHeight = document.querySelector('header').offsetHeight;
+                                const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
+                                const offsetPosition = elementPosition - headerHeight - 20;
+
+                                window.scrollTo({
+                                    top: offsetPosition,
+                                    behavior: 'smooth'
+                                });
+
+                                // Enhanced highlight effect
+                                element.style.transform = 'scale(1.02)';
+                                element.style.boxShadow = '0 10px 30px rgba(76, 107, 87, 0.3)';
+                                setTimeout(() => {
+                                    element.style.transform = '';
+                                    element.style.boxShadow = '';
+                                }, 2000);
+                            }
+                        }
+                    },
+                    onHover: (event, chartElement) => {
+                        event.native.target.style.cursor = chartElement[0] ? 'pointer' : 'default';
+                    }
+                }
+            });
+
+            // Add chart animation on load
+            if (state.animations.enabled) {
+                complianceChart.update('active');
+            }
+
+        } catch (error) {
+            console.error('Failed to create compliance chart:', error);
+            // Show fallback content
+            canvas.parentElement.innerHTML = '<p class="text-center text-gray-500">Chart visualization unavailable</p>';
+        }
+    }
+
+    // Enhanced intersection observer for chart loading
+    const complianceChartObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                // Add loading spinner
+                const canvas = entry.target;
+                const container = canvas.parentElement;
+                const spinner = document.createElement('div');
+                spinner.className = 'loading-spinner mx-auto mb-4';
+                container.insertBefore(spinner, canvas);
+
+                setTimeout(() => {
+                    createComplianceChart();
+                    spinner.remove();
+                    observer.unobserve(entry.target);
+                }, 500);
+            }
+        });
+    }, { threshold: 0.1 });
+
+    const chartElement = document.getElementById('complianceChart');
+    if (chartElement) {
+        complianceChartObserver.observe(chartElement);
+    }
+
+    // Enhanced accessibility features
+    document.addEventListener('keydown', function(e) {
+        // ESC key to close mobile menu
+        if (e.key === 'Escape' && !mobileMenu.classList.contains('hidden')) {
+            mobileMenuButton.click();
+        }
+    });
+
+    // Enhanced error handling for missing elements
+    window.addEventListener('error', function(e) {
+        console.error('Application error:', e.error);
+    });
+
+    // Performance monitoring
+    if ('performance' in window) {
+        window.addEventListener('load', function() {
+            const loadTime = performance.now();
+            if (loadTime > 3000) {
+                console.warn('Page load time exceeded 3 seconds:', loadTime);
+            }
+        });
+    }
+
+    // Add resize handler for responsive adjustments
+    let resizeTimeout;
+    window.addEventListener('resize', function() {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(() => {
+            // Recalculate accordion heights if needed
+            document.querySelectorAll('.accordion-content').forEach(content => {
+                if (content.style.maxHeight && content.style.maxHeight !== '0px') {
+                    content.style.maxHeight = content.scrollHeight + "px";
+                }
+            });
+        }, 250);
+    });
+});
+</script>
+</body>
+</html>

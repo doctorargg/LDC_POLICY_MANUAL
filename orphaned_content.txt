@@ -1,0 +1,97 @@
+        </section>
+                                <p class="text-sm text-green-700">Intravenous (IV) administration is the gold standard for off-label ketamine use with the best supporting evidence for efficacy in treatment-resistant depression.</p>
+                            </div>
+
+                            <h3 class="font-semibold text-lg text-gray-800">Standard Treatment Protocol</h3>
+                            <ul class="list-disc list-inside space-y-2">
+                                <li><strong>Initial Dosage:</strong> 0.5 mg/kg IV over 40 minutes</li>
+                                <li><strong>Dose Escalation:</strong> May increase up to 1.0 mg/kg based on response and tolerability</li>
+                                <li><strong>Treatment Schedule:</strong> Typically twice per week for 4-5 weeks (6-10 total treatments)</li>
+                                <li><strong>Challenge Phase:</strong> Initial 3-5 treatment trial to assess responsiveness</li>
+                                <li><strong>Maintenance:</strong> Individualized schedule based on response (weekly to monthly)</li>
+                            </ul>
+
+                            <h3 class="font-semibold text-lg text-gray-800 mt-6">Required Monitoring During Administration</h3>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div class="bg-gray-50 p-4 rounded">
+                                    <h4 class="font-semibold text-gray-800">Vital Signs</h4>
+                                    <ul class="list-disc list-inside text-sm space-y-1">
+                                        <li>Blood pressure every 15 minutes</li>
+                                        <li>Heart rate continuous monitoring</li>
+                                        <li>Oxygen saturation continuous</li>
+                                        <li>Respiratory rate every 15 minutes</li>
+                                    </ul>
+                                </div>
+                                <div class="bg-gray-50 p-4 rounded">
+                                    <h4 class="font-semibold text-gray-800">Clinical Assessment</h4>
+                                    <ul class="list-disc list-inside text-sm space-y-1">
+                                        <li>Level of consciousness</li>
+                                        <li>Dissociative effects monitoring</li>
+                                        <li>Signs of ketamine toxicity</li>
+                                        <li>Patient comfort and safety</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <h3 class="font-semibold text-lg text-gray-800 mt-6">Facility & Equipment Requirements</h3>
+                            <ul class="list-disc list-inside space-y-2">
+                                <li><strong>Comfortable Infusion Room:</strong> Private, quiet environment with reclining chair</li>
+                                <li><strong>Recovery Area:</strong> Separate space for post-treatment monitoring</li>
+                                <li><strong>Emergency Equipment:</strong> Crash cart, oxygen, emergency medications readily available</li>
+                                <li><strong>Monitoring Equipment:</strong> Blood pressure monitor, pulse oximeter, cardiac monitor</li>
+                                <li><strong>IV Supplies:</strong> Standard IV infusion equipment and supplies</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-sm">
+                    <div class="accordion-header p-5 flex justify-between items-center border-b">
+                        <h2 class="text-xl font-semibold text-gray-800"><i class="fa-solid fa-heart-pulse mr-3 text-[#7D9A89]"></i>Post-Treatment & Follow-Up Protocols</h2>
+                        <i class="fa-solid fa-chevron-down accordion-icon"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="p-5 text-gray-700 space-y-4">
+                            <h3 class="font-semibold text-lg text-gray-800">Recovery Requirements</h3>
+                            <ul class="list-disc list-inside space-y-2">
+                                <li><strong>Vital Sign Stability:</strong> Return to pre-administration baseline levels</li>
+                                <li><strong>Mental Status:</strong> Return to baseline sensorium and orientation</li>
+                                <li><strong>Dissociative Effects:</strong> Complete resolution of dissociative symptoms</li>
+                                <li><strong>Minimum Recovery Time:</strong> At least 2 hours post-infusion monitoring</li>
+                                <li><strong>Discharge Criteria:</strong> Stable vitals, clear mental status, able to ambulate safely</li>
+                            </ul>
+
+                            <h3 class="font-semibold text-lg text-gray-800 mt-6">Patient Safety Instructions</h3>
+                            <div class="bg-orange-50 border-l-4 border-orange-400 p-4">
+                                <ul class="list-disc list-inside space-y-2 text-orange-800">
+                                    <li><strong>No Driving:</strong> Prohibited for 24 hours post-treatment</li>
+                                    <li><strong>No Heavy Machinery:</strong> Avoid operating potentially hazardous equipment</li>
+                                    <li><strong>Responsible Adult:</strong> Must have appropriate driver/caregiver for transport home</li>
+                                    <li><strong>Activity Restrictions:</strong> Avoid important decisions or complex tasks for 24 hours</li>
+                                </ul>
+                            </div>
+
+                            <h3 class="font-semibold text-lg text-gray-800 mt-6">Follow-Up Assessment Schedule</h3>
+                            <ul class="list-disc list-inside space-y-2">
+                                <li><strong>24-48 Hours:</strong> Phone check-in for safety and side effects</li>
+                                <li><strong>1 Week:</strong> Clinical assessment using standardized rating scales</li>
+                                <li><strong>Between Sessions:</strong> Monitor for mood changes, suicidality, side effects</li>
+                                <li><strong>Post-Series:</strong> Comprehensive evaluation 1-2 weeks after final treatment</li>
+                                <li><strong>Long-term:</strong> Monthly follow-up for maintenance patients</li>
+                            </ul>
+
+                            <h3 class="font-semibold text-lg text-gray-800 mt-6">Documentation Requirements</h3>
+                            <ul class="list-disc list-inside space-y-2">
+                                <li>Pre-treatment assessment and vital signs</li>
+                                <li>Real-time monitoring during infusion (every 15 minutes)</li>
+                                <li>Post-treatment recovery documentation</li>
+                                <li>Patient response and side effects</li>
+                                <li>Discharge instructions and safety counseling</li>
+                                <li>Follow-up assessments and rating scale scores</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
